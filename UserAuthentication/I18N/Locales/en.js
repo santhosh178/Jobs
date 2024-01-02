@@ -3,6 +3,7 @@ export default {
     login: {
         screen_header_name: 'Welcome',
         screen_name: 'Welcome Screen',
+        new_here: 'New Here'
     },
     signup: {
         screen_name: 'Signup Screen',
@@ -22,6 +23,12 @@ export default {
         exit: 'Are You Exit',
         session: 'Session Expired',
     },
+    placeholder: {
+        name: 'Enter your name',
+        email: 'Enter your email',
+        password: 'Enter your password',
+        phoneNumber: 'Enter your phoneNumber',
+    }
 
 };
 

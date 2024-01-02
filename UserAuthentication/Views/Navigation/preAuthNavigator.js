@@ -11,6 +11,7 @@ const PreAuthNavigator = () => {
             <Screen
                 name={I18n.t('login.screen_header_name')}
                 component={LoginScreen}
+                options={{ headerShown: false }}
             />
         </Navigator>
     )

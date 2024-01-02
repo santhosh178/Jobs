@@ -29,16 +29,16 @@ const PostAuthNavigator = () => {
             <Screen
                 name={I18n.t('home.screen_header_name')}
                 component={HomeScreen}
-                options={{
-                    headerRight: () =>
-                        <View>
-                            <Pressable onPress={onLogout} style={styles.parent}>
-                                <Text style={styles.dot}></Text>
-                                <Text style={styles.dot}></Text>
-                                <Text style={styles.dot}></Text>
-                            </Pressable>
-                        </View>
-                }}
+                // options={{
+                //     headerRight: () =>
+                //         <View>
+                //             <Pressable onPress={onLogout} style={styles.parent}>
+                //                 <Text style={styles.dot}></Text>
+                //                 <Text style={styles.dot}></Text>
+                //                 <Text style={styles.dot}></Text>
+                //             </Pressable>
+                //         </View>
+                // }}
             />
         </Navigator>
     )

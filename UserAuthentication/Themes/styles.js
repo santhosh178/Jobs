@@ -1,53 +1,23 @@
 import { StyleSheet } from "react-native";
 
 const styles = StyleSheet.create({
-
-    // common style
-
-    Container: {
-        alignItems: 'center',
-        top: 200,
-        gap: 20,
-
-    },
-    Text: {
-        fontSize: 20,
-        fontWeight: 'bold',
-        color: '#000000'
-    },
-
-    // Three Dot button in homescreen header 
-
-    parent: {
-        right: 10,
-        top: 4,
-    },
-    dot: {
-        backgroundColor: 'black',
-        marginBottom: 3,
-        width: 6,
-        height: 6,
-        borderRadius: 5,
-    },
-
-    // button 
-    
+    /*---------- Button -------------*/
     btn: {
-        width: 180,
-        borderRadius: 10,
+        width: 120,
+        borderRadius: 20,
         padding: 10,
         elevation: 2,
         height: 40,
-        backgroundColor: '#FF0000',
+        backgroundColor: '#7E77FF',
 
     },
-    Click: {
+    bthText: {
         textAlign: 'center',
-        color: '#fff'
+        color: '#fff',
+        fontWeight: '600',
     },
 
-    // Loader
-
+    /*--------- Loader ------------*/
     modalBackground: {
         flex: 1,
         alignItems: 'center',
@@ -68,8 +38,44 @@ const styles = StyleSheet.create({
     activityIndicator: {
         alignItems: 'center',
         height: 80,
-    }
+    },
+
+    /*--------- Login ------------*/
+    image: {
+        width: 390,
+        height: 250,
+    },
+    loginContainer: {
+        padding: 20,
+        gap: 30,
+        alignItems: 'center'
+    },
+
+    name: {
+        fontSize: 30,
+        fontWeight: '600',
+        color: '#7E77FF',
+        textAlign: 'center'
+    },
+
+    input: {
+        height: 40,
+        width: 280,
+        borderWidth: 2,
+        opacity: 0.6,
+        borderRadius: 20,
+        padding: 10,
+        borderColor: '#7E77FF',
+    },
+
+    loginBtn: {
+        flexDirection: 'row',
+        gap: 5,
+      },
+
+      text: {
+        color: '#7E77FF',
+      },
 
 });
-
 export default styles;
