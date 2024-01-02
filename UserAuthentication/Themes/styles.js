@@ -42,7 +42,7 @@ const styles = StyleSheet.create({
 
     /*--------- Login ------------*/
     image: {
-        width: 390,
+        width: 380,
         height: 250,
     },
     loginContainer: {

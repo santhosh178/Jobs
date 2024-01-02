@@ -31,8 +31,8 @@ const LoginScreen = () => {
         }
 
         let values = {
-            "email": ('santhosh03@gmail.com'),
-            "password": ('santhosh03'),
+            "email": (email),
+            "password": (password),
         }
         try {
             SetLoading(true);
