@@ -1,5 +1,7 @@
 import { StyleSheet } from "react-native";
 
+export const themeColor = '#E42527';
+
 const styles = StyleSheet.create({
     /*---------- Button -------------*/
     btn: {
@@ -8,7 +10,7 @@ const styles = StyleSheet.create({
         padding: 10,
         elevation: 2,
         height: 40,
-        backgroundColor: '#FF0000',
+        backgroundColor: themeColor,
     },
     bthText: {
         textAlign: 'center',
@@ -38,44 +40,49 @@ const styles = StyleSheet.create({
     },
 
     /*--------- Login ------------*/
-    image: {
-        width: 390,
-        height: 260,
+    loginimage: {
+        width: 540,
+        height: 330,
     },
     loginContainer: {
-        padding: 20,
         gap: 30,
-        alignItems: 'center'
+        alignItems: 'center',
+        padding: 50
     },
-    name: {
+    welcomeMsg: {
         fontSize: 30,
-        fontWeight: '500',
         color: 'black',
+        width: 300,
+        textAlign: 'center',
+        fontFamily: 'OpenSans-Bold',
     },
     input: {
         height: 40,
         width: 310,
         borderWidth: 1,
-        opacity: 0.6,
         borderRadius: 20,
         padding: 10,
-        borderColor: '#7E77FF',
+        borderColor: '#A9A9A9',
     },
     loginBtn: {
         flexDirection: 'row',
         gap: 5,
     },
+
     text: {
         color: '#7E77FF',
     },
 
     /*------- Signup  ------*/
     signupContainer: {
-        justifyContent : 'space-around',
-        alignItems:'center',
-        gap :25,
+        alignItems: 'center',
+        gap: 25,
+        padding: 40,
+    },
+    image: {
+        width: 390,
+        height: 260,
     },
 
 });
-
 export default styles;

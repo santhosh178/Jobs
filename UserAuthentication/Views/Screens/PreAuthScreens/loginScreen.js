@@ -1,8 +1,8 @@
 import React, { useState, useContext } from "react";
 import Loader from "../../loader";
-import { Pressable, Text, View, Image, TextInput, KeyboardAvoidingView } from "react-native";
+import { Pressable, Text, View, Image, TextInput, KeyboardAvoidingView, Alert } from "react-native";
 import Button from "../button";
-import styles from "../../../Themes/styles";
+import styles, { themeColor } from "../../../Themes/styles";
 import { login } from "../../../Util/NetworkUtils";
 import AuthContext from "../../../Context/AuthContext/authContext";
 import I18n from "../../../I18N/i18n";
@@ -23,12 +23,21 @@ const LoginScreen = () => {
 
     const loginApi = async () => {
 
+
         if (!email) {
-            alert('Please fill Email');
+            Alert.alert(
+                I18n.t('alert.Alert'),
+                I18n.t('alert.email'),
+                [{ text: I18n.t('alert.ok') }]
+            );
             return;
         }
         if (!password) {
-            alert('Please fill Password');
+            Alert.alert(
+                I18n.t('alert.Alert'),
+                I18n.t('alert.password'),
+                [{ text: I18n.t('alert.ok') }]
+            );
             return;
         }
 
@@ -44,8 +53,27 @@ const LoginScreen = () => {
             onAuthentication(`${data.tokenType} ${data.accessToken}`);
         }
         catch (error) {
-            SetLoading(false);
-            return error;
+            SetLoading(false)
+            if (error.message == "Invalid email or password") {
+                Alert.alert(
+                    I18n.t('alert.Alert'),
+                    I18n.t('alert.check_email_password'),
+                    [{ text: I18n.t('alert.ok') }]
+                );
+                setEmail('');
+                setPassword('');
+                return;
+            }
+            if (error.status == 400) {
+                Alert.alert(
+                    I18n.t('alert.Alert'),
+                    I18n.t('alert.go_to_signup'),
+                    [{ text: I18n.t('alert.ok') }]
+                );
+                setEmail('');
+                setPassword('');
+                return;
+            }
         }
     };
 
@@ -55,21 +83,23 @@ const LoginScreen = () => {
         >
             <Loader loading={loading} />
             <View>
-                <Image style={styles.image} source={require('/home/test/Git-Clone/Jobs/UserAuthentication/Images/job.png')} />
+                <Image style={styles.loginimage} source={require('/home/test/Git-Clone/Jobs/UserAuthentication/Images/job.png')} />
             </View>
             <View style={styles.loginContainer}>
-                <Text style={styles.name}>{I18n.t('login.screen_header_name')}</Text>
-                <TextInput style={styles.input} placeholder={I18n.t('placeholder.email')} placeholderTextColor={'#7E77FF'} keyboardType='email-address' value={email}
+                <Text style={styles.welcomeMsg}>{I18n.t('login.header_name')}</Text>
+                <TextInput style={styles.input} placeholder={I18n.t('placeholder.email')} placeholderTextColor={'#A9A9A9'} keyboardType='email-address' value={email}
                     onChangeText={(value) => onInputChange(value, setEmail)}
                     onSubmitEditing={() => { this.secondTextInput.focus(); }}
                     blurOnSubmit={false}
                     returnKeyType='next'
+                    selectionColor={themeColor}
                 >
                 </TextInput>
-                <TextInput style={styles.input} placeholder={I18n.t('placeholder.password')} placeholderTextColor={'#7E77FF'} value={password} secureTextEntry={true}
+                <TextInput style={styles.input} placeholder={I18n.t('placeholder.password')} placeholderTextColor={'#A9A9A9'} value={password} secureTextEntry={true}
                     onChangeText={(value) => onInputChange(value, setPassword)}
                     ref={(input) => { this.secondTextInput = input; }}
                     returnKeyType='next'
+                    selectionColor={themeColor}
                 >
                 </TextInput>
 
@@ -77,7 +107,7 @@ const LoginScreen = () => {
                     <Button name={I18n.t('button.login')} />
                 </Pressable>
                 <View style={styles.loginBtn}>
-                    <Text style={styles.text}>{I18n.t('login.new_here')}?</Text>
+                    <Text style={styles.text}>{I18n.t('login.new_here')}</Text>
                     <Signup />
                 </View>
             </View>

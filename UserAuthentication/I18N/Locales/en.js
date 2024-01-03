@@ -1,12 +1,14 @@
 export default {
 
     login: {
-        screen_header_name: 'Welcome',
-        screen_name: 'Welcome Screen',
-        new_here: 'New Here'
+        header_name: 'India\'s #1 Job completion app',
+        new_here: 'New Here?'
     },
     signup: {
-        screen_name: 'Signup Screen',
+        header_name: 'Create Account',
+        already_account: 'Already have an account?',
+        success: 'signup success',
+        email_already_used: 'This emailid already used',
     },
     home: {
         screen_header_name: 'Home',
@@ -18,17 +20,23 @@ export default {
         logout: 'Logout'
     },
     alert: {
+        Alert: 'Alert',
         ok: 'Ok',
         cancel: 'Cancel',
         exit: 'Are You Exit',
         session: 'Session Expired',
+        name: 'Please fill Name',
+        email: 'Please fill Email',
+        password: 'Please fill Password',
+        phoneNumber: 'Please fill PhoneNumber',
+        check_email_password: 'Please check your email or password',
+        go_to_signup: 'Go to signup',
     },
     placeholder: {
         name: 'Enter your name',
         email: 'Enter your email',
         password: 'Enter your password',
         phoneNumber: 'Enter your phoneNumber',
-    }
-
+    },
 };
 

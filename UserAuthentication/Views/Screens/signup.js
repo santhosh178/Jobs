@@ -1,6 +1,6 @@
 import React, { useState } from "react";
-import { Text, View, Pressable, Modal, TextInput, Image, KeyboardAvoidingView, Platform } from "react-native";
-import styles from "../../Themes/styles";
+import { Text, View, Pressable, Modal, TextInput, Image, KeyboardAvoidingView, Platform, Alert } from "react-native";
+import styles ,{ themeColor } from "../../Themes/styles";
 import Button from "./button";
 import Loader from "../loader";
 import I18n from "../../I18N/i18n";
@@ -23,19 +23,35 @@ const Signup = () => {
     const signupApi = async () => {
 
         if (!name) {
-            alert('Please fill Name');
+            Alert.alert(
+                I18n.t('alert.Alert'),
+                I18n.t('alert.name'),
+                [{ text: I18n.t('alert.ok') }]
+            );
             return;
         }
         if (!email) {
-            alert('Please fill Email');
+            Alert.alert(
+                I18n.t('alert.Alert'),
+                I18n.t('alert.email'),
+                [{ text: I18n.t('alert.ok') }]
+            );
             return;
         }
         if (!password) {
-            alert('Please fill Password');
+            Alert.alert(
+                I18n.t('alert.Alert'),
+                I18n.t('alert.password'),
+                [{ text: I18n.t('alert.ok') }]
+            );
             return;
         }
         if (!phoneNumber) {
-            alert('Please fill Phonenumber');
+            Alert.alert(
+                I18n.t('alert.Alert'),
+                I18n.t('alert.phoneNumber'),
+                [{ text: I18n.t('alert.ok') }]
+            );
             return;
         }
 
@@ -49,7 +65,11 @@ const Signup = () => {
             SetLoading(true);
             const data = await signup(values);
             if (data.success == true) {
-                alert('signup success');
+                Alert.alert(
+                    I18n.t('alert.Alert'),
+                    I18n.t('signup.success'),
+                    [{ text: I18n.t('alert.ok') }]
+                );
                 setModalVisible(false);
                 SetLoading(false);
                 setName('');
@@ -60,7 +80,11 @@ const Signup = () => {
 
         } catch (error) {
             SetLoading(false);
-            alert('This emailid already used');
+            Alert.alert(
+                I18n.t('alert.Alert'),
+                I18n.t('signup.email_already_used'),
+                [{ text: I18n.t('alert.ok') }]
+            );
             setName('');
             setEmail('');
             setPassword('');
@@ -83,17 +107,19 @@ const Signup = () => {
                         <Image style={styles.image} source={require('/home/test/Git-Clone/Jobs/UserAuthentication/Images/job.png')} />
                     </View>
                     <View style={[styles.signupContainer]}>
-                        <Text style={styles.name}>Create Account</Text>
-                        <TextInput placeholder="name" style={styles.input}
+                        <Text style={styles.welcomeMsg}>{I18n.t('signup.header_name')}</Text>
+                        <TextInput placeholder={I18n.t('placeholder.name')} style={styles.input}
                             value={name}
                             onChangeText={(value) => onInputChange(value, setName)}
                             placeholderTextColor={'black'}
                             returnKeyType="next"
                             onSubmitEditing={() => { this.secondTextInput.focus(); }}
                             blurOnSubmit={false}
+                            selectionColor={themeColor}
+
                         >
                         </TextInput>
-                        <TextInput placeholder="Email" style={styles.input}
+                        <TextInput placeholder={I18n.t('placeholder.email')} style={styles.input}
                             value={email}
                             onChangeText={(value) => onInputChange(value, setEmail)}
                             placeholderTextColor={'black'}
@@ -102,9 +128,11 @@ const Signup = () => {
                             ref={(input) => { this.secondTextInput = input; }}
                             onSubmitEditing={() => { this.thirdTextInput.focus(); }}
                             blurOnSubmit={false}
+                            selectionColor={themeColor}
+
                         >
                         </TextInput>
-                        <TextInput placeholder="Password" style={styles.input}
+                        <TextInput placeholder={I18n.t('placeholder.password')} style={styles.input}
                             value={password}
                             onChangeText={(value) => onInputChange(value, setPassword)}
                             placeholderTextColor={'black'}
@@ -112,22 +140,26 @@ const Signup = () => {
                             ref={(input) => { this.thirdTextInput = input; }}
                             onSubmitEditing={() => { this.fourTextInput.focus(); }}
                             blurOnSubmit={false}
+                            selectionColor={themeColor}
+
                         >
                         </TextInput>
-                        <TextInput placeholder="Mobile Number" style={styles.input}
+                        <TextInput placeholder={I18n.t('placeholder.phoneNumber')} style={styles.input}
                             value={phoneNumber}
                             returnKeyType="next"
                             onChangeText={(value) => onInputChange(value, setPhoneNumber)}
                             placeholderTextColor={'black'}
                             ref={(input) => { this.fourTextInput = input; }}
+                            selectionColor={themeColor}
+
                         >
                         </TextInput>
                         <Pressable onPress={signupApi}>
                             <Button name={I18n.t('button.signup')} />
                         </Pressable>
                         <View style={styles.loginBtn}>
-                            <Text style={styles.text}>Already have an account ?</Text>
-                            <Text onPress={() => setModalVisible(false)}>sign in</Text>
+                            <Text style={styles.text}>{I18n.t('signup.already_account')}</Text>
+                            <Text style={styles.text} onPress={() => setModalVisible(false)}>{I18n.t('button.login')}</Text>
                         </View>
                     </View>
                 </KeyboardAvoidingView>
