@@ -50,3 +50,11 @@ export async function getCurrentUser(userSignout) {
     
   },userSignout);
 };
+
+export function signup(signupRequest) {
+  return request({
+      url: API_BASE_URL + "/auth/signup",
+      method: 'POST',
+      body: JSON.stringify(signupRequest)
+  });
+}
