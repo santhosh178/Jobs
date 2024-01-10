@@ -1,0 +1,4 @@
+#Thu Jan 04 12:05:27 IST 2024
+base.0=/home/test/Git-Clone/Jobs/android/app/build/intermediates/dex/release/minifyReleaseWithR8/classes.dex
+renamed.0=classes.dex
+path.0=classes.dex

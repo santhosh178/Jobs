@@ -38,7 +38,10 @@ com.bootstrap.app-mergeDebugResources-36 /home/test/Git-Clone/Jobs/android/app/b
 com.bootstrap.app-merged_res-37 /home/test/Git-Clone/Jobs/android/app/build/intermediates/merged_res/debug
 com.bootstrap.app-debug-38 /home/test/Git-Clone/Jobs/android/app/src/debug/res
 com.bootstrap.app-main-39 /home/test/Git-Clone/Jobs/android/app/src/main/res
-com.bootstrap.app-packaged_res-40 /home/test/Git-Clone/Jobs/node_modules/react-native-encrypted-storage/android/build/intermediates/packaged_res/debug
-com.bootstrap.app-packaged_res-41 /home/test/Git-Clone/Jobs/node_modules/react-native-i18n/android/build/intermediates/packaged_res/debug
-com.bootstrap.app-packaged_res-42 /home/test/Git-Clone/Jobs/node_modules/react-native-safe-area-context/android/build/intermediates/packaged_res/debug
-com.bootstrap.app-packaged_res-43 /home/test/Git-Clone/Jobs/node_modules/react-native-screens/android/build/intermediates/packaged_res/debug
+com.bootstrap.app-packaged_res-40 /home/test/Git-Clone/Jobs/node_modules/@react-native-picker/picker/android/build/intermediates/packaged_res/debug
+com.bootstrap.app-packaged_res-41 /home/test/Git-Clone/Jobs/node_modules/react-native-encrypted-storage/android/build/intermediates/packaged_res/debug
+com.bootstrap.app-packaged_res-42 /home/test/Git-Clone/Jobs/node_modules/react-native-i18n/android/build/intermediates/packaged_res/debug
+com.bootstrap.app-packaged_res-43 /home/test/Git-Clone/Jobs/node_modules/react-native-safe-area-context/android/build/intermediates/packaged_res/debug
+com.bootstrap.app-packaged_res-44 /home/test/Git-Clone/Jobs/node_modules/react-native-screens/android/build/intermediates/packaged_res/debug
+com.bootstrap.app-packaged_res-45 /home/test/Git-Clone/Jobs/node_modules/react-native-svg/android/build/intermediates/packaged_res/debug
+com.bootstrap.app-packaged_res-46 /home/test/Git-Clone/Jobs/node_modules/react-native-vector-icons/android/build/intermediates/packaged_res/debug

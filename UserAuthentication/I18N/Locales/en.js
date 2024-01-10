@@ -11,7 +11,7 @@ export default {
         email_already_used: 'This emailid already used',
     },
     home: {
-        screen_header_name: 'Home',
+        screen_header_name: 'All Jobs',
         screen_name: 'Home Screen',
     },
     button: {

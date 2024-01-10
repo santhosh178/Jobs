@@ -11,7 +11,7 @@ export default {
     email_already_used: 'இந்த மின்னஞ்சல் ஏற்கனவே பயன்படுத்தப்பட்டது',
   },
   home: {
-    screen_header_name: 'வீடு',
+    screen_header_name: 'அனைத்து வேலைகள்',
     screen_name: 'முகப்புத் திரை',
   },
   button: {

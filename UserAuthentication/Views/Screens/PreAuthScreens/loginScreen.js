@@ -1,8 +1,8 @@
 import React, { useState, useContext } from "react";
 import Loader from "../../loader";
-import { Pressable, Text, View, Image, TextInput, KeyboardAvoidingView, Alert } from "react-native";
+import { Pressable, Text, View, Image, TextInput, KeyboardAvoidingView, Alert, Platform } from "react-native";
 import Button from "../button";
-import styles, { themeColor } from "../../../Themes/styles";
+import styles, { themeColor, placeHolderTextColor } from "../../../Themes/styles";
 import { login } from "../../../Util/NetworkUtils";
 import AuthContext from "../../../Context/AuthContext/authContext";
 import I18n from "../../../I18N/i18n";
@@ -22,8 +22,6 @@ const LoginScreen = () => {
     }
 
     const loginApi = async () => {
-
-
         if (!email) {
             Alert.alert(
                 I18n.t('alert.Alert'),
@@ -83,11 +81,11 @@ const LoginScreen = () => {
         >
             <Loader loading={loading} />
             <View>
-                <Image style={styles.loginimage} source={require('/home/test/Git-Clone/Jobs/UserAuthentication/Images/job.png')} />
+                <Image style={styles.loginImage} source={require('/home/test/Git-Clone/Jobs/UserAuthentication/Images/job.jpeg')} />
             </View>
             <View style={styles.loginContainer}>
                 <Text style={styles.welcomeMsg}>{I18n.t('login.header_name')}</Text>
-                <TextInput style={styles.input} placeholder={I18n.t('placeholder.email')} placeholderTextColor={'#A9A9A9'} keyboardType='email-address' value={email}
+                <TextInput style={styles.input} placeholder={I18n.t('placeholder.email')} placeholderTextColor={placeHolderTextColor} keyboardType='email-address' value={email}
                     onChangeText={(value) => onInputChange(value, setEmail)}
                     onSubmitEditing={() => { this.secondTextInput.focus(); }}
                     blurOnSubmit={false}
@@ -95,7 +93,7 @@ const LoginScreen = () => {
                     selectionColor={themeColor}
                 >
                 </TextInput>
-                <TextInput style={styles.input} placeholder={I18n.t('placeholder.password')} placeholderTextColor={'#A9A9A9'} value={password} secureTextEntry={true}
+                <TextInput style={styles.input} placeholder={I18n.t('placeholder.password')} placeholderTextColor={placeHolderTextColor} value={password} secureTextEntry={true}
                     onChangeText={(value) => onInputChange(value, setPassword)}
                     ref={(input) => { this.secondTextInput = input; }}
                     returnKeyType='next'

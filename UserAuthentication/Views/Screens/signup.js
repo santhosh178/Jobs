@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Text, View, Pressable, Modal, TextInput, Image, KeyboardAvoidingView, Platform, Alert } from "react-native";
-import styles ,{ themeColor } from "../../Themes/styles";
+import styles, { placeHolderTextColor, themeColor } from "../../Themes/styles";
 import Button from "./button";
 import Loader from "../loader";
 import I18n from "../../I18N/i18n";
@@ -77,7 +77,6 @@ const Signup = () => {
                 setPassword('');
                 setPhoneNumber('');
             }
-
         } catch (error) {
             SetLoading(false);
             Alert.alert(
@@ -104,54 +103,50 @@ const Signup = () => {
                     keyboardVerticalOffset={headerHeight}
                 >
                     <View>
-                        <Image style={styles.image} source={require('/home/test/Git-Clone/Jobs/UserAuthentication/Images/job.png')} />
+                        <Image style={styles.image} source={require('/home/test/Git-Clone/Jobs/UserAuthentication/Images/job.jpeg')} />
                     </View>
                     <View style={[styles.signupContainer]}>
                         <Text style={styles.welcomeMsg}>{I18n.t('signup.header_name')}</Text>
                         <TextInput placeholder={I18n.t('placeholder.name')} style={styles.input}
                             value={name}
                             onChangeText={(value) => onInputChange(value, setName)}
-                            placeholderTextColor={'#A9A9A9'}
+                            placeholderTextColor={placeHolderTextColor}
                             returnKeyType="next"
                             onSubmitEditing={() => { this.secondTextInput.focus(); }}
                             blurOnSubmit={false}
                             selectionColor={themeColor}
-
                         >
                         </TextInput>
                         <TextInput placeholder={I18n.t('placeholder.email')} style={styles.input}
                             value={email}
                             onChangeText={(value) => onInputChange(value, setEmail)}
-                            placeholderTextColor={'#A9A9A9'}
+                            placeholderTextColor={placeHolderTextColor}
                             keyboardType="email-address"
                             returnKeyType="next"
                             ref={(input) => { this.secondTextInput = input; }}
                             onSubmitEditing={() => { this.thirdTextInput.focus(); }}
                             blurOnSubmit={false}
                             selectionColor={themeColor}
-
                         >
                         </TextInput>
                         <TextInput placeholder={I18n.t('placeholder.password')} style={styles.input}
                             value={password}
                             onChangeText={(value) => onInputChange(value, setPassword)}
-                            placeholderTextColor={'#A9A9A9'}
+                            placeholderTextColor={placeHolderTextColor}
                             returnKeyType="next"
                             ref={(input) => { this.thirdTextInput = input; }}
                             onSubmitEditing={() => { this.fourTextInput.focus(); }}
                             blurOnSubmit={false}
                             selectionColor={themeColor}
-
                         >
                         </TextInput>
                         <TextInput placeholder={I18n.t('placeholder.phoneNumber')} style={styles.input}
                             value={phoneNumber}
                             returnKeyType="next"
                             onChangeText={(value) => onInputChange(value, setPhoneNumber)}
-                            placeholderTextColor={'#A9A9A9'}
+                            placeholderTextColor={placeHolderTextColor}
                             ref={(input) => { this.fourTextInput = input; }}
                             selectionColor={themeColor}
-
                         >
                         </TextInput>
                         <Pressable onPress={signupApi}>

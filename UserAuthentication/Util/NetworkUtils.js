@@ -18,7 +18,7 @@ const request = async (options,userSignout) => {
   const defaulls = { headers: headers };
   options = Object.assign({}, defaulls, options);
 
-  const response = await fetch(options.url, options);
+  const response = await fetch(options.url,options);
   const json = await response.json();
   if (!response.ok) {
     return Promise.reject(json);
@@ -31,7 +31,7 @@ const request = async (options,userSignout) => {
   return json;
 };
 
-export async function login(loginRequest) {
+export function login(loginRequest) {
   return request({
     url: API_BASE_URL + '/auth/login',
     method: 'POST',
@@ -43,9 +43,10 @@ export async function getCurrentUser(userSignout) {
   if (!await EncryptedStorage.getItem('user-token')) {
     return Promise.reject("No access token set.");
   }
+  const urlWithParams = `${API_BASE_URL}/user/me`;
 
   return request({
-    url: API_BASE_URL + '/user/me',
+    url: urlWithParams,
     method: 'GET'
     
   },userSignout);
@@ -57,4 +58,26 @@ export function signup(signupRequest) {
       method: 'POST',
       body: JSON.stringify(signupRequest)
   });
+};
+
+export  function getJobs(queryParams) {
+  const urlWithParams = `${API_BASE_URL}/job/get_all_jobs?${getQueryString(queryParams)}`;
+  return request({
+    url: urlWithParams,
+    method: 'GET'
+  });
+};
+
+export  function getMyJobs(queryParams) {
+  const urlWithParams = `${API_BASE_URL}/job/get_user_jobs_details?${getQueryString(queryParams)}`;
+  return request({
+    url: urlWithParams,
+    method: 'GET'
+  });
+};
+
+function getQueryString(params) {
+  return Object.entries(params)
+    .map(([key, value]) => `${encodeURIComponent(key)}=${encodeURIComponent(value)}`)
+    .join('&');
 }
