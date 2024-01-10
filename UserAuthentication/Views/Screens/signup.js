@@ -102,7 +102,7 @@ const Signup = () => {
                 visible={modalVisible}>
                 <KeyboardAvoidingView behavior={Platform.OS === 'ios' ? 'padding' : 'position'}
                     keyboardVerticalOffset={headerHeight}
-                    style={styles.overAll}>
+                >
                     <View>
                         <Image style={styles.image} source={require('/home/test/Git-Clone/Jobs/UserAuthentication/Images/job.png')} />
                     </View>
@@ -111,7 +111,7 @@ const Signup = () => {
                         <TextInput placeholder={I18n.t('placeholder.name')} style={styles.input}
                             value={name}
                             onChangeText={(value) => onInputChange(value, setName)}
-                            placeholderTextColor={'black'}
+                            placeholderTextColor={'#A9A9A9'}
                             returnKeyType="next"
                             onSubmitEditing={() => { this.secondTextInput.focus(); }}
                             blurOnSubmit={false}
@@ -122,7 +122,7 @@ const Signup = () => {
                         <TextInput placeholder={I18n.t('placeholder.email')} style={styles.input}
                             value={email}
                             onChangeText={(value) => onInputChange(value, setEmail)}
-                            placeholderTextColor={'black'}
+                            placeholderTextColor={'#A9A9A9'}
                             keyboardType="email-address"
                             returnKeyType="next"
                             ref={(input) => { this.secondTextInput = input; }}
@@ -135,7 +135,7 @@ const Signup = () => {
                         <TextInput placeholder={I18n.t('placeholder.password')} style={styles.input}
                             value={password}
                             onChangeText={(value) => onInputChange(value, setPassword)}
-                            placeholderTextColor={'black'}
+                            placeholderTextColor={'#A9A9A9'}
                             returnKeyType="next"
                             ref={(input) => { this.thirdTextInput = input; }}
                             onSubmitEditing={() => { this.fourTextInput.focus(); }}
@@ -148,7 +148,7 @@ const Signup = () => {
                             value={phoneNumber}
                             returnKeyType="next"
                             onChangeText={(value) => onInputChange(value, setPhoneNumber)}
-                            placeholderTextColor={'black'}
+                            placeholderTextColor={'#A9A9A9'}
                             ref={(input) => { this.fourTextInput = input; }}
                             selectionColor={themeColor}
 
