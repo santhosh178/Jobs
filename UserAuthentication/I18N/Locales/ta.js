@@ -13,6 +13,8 @@ export default {
   home: {
     screen_header_name: 'அனைத்து வேலைகள்',
     screen_name: 'முகப்புத் திரை',
+    list_backend_limit : 'வரம்புகள் உள்ளன',
+    list_no_data : 'மேலும் தரவு இல்லை',
   },
   button: {
     login: 'உள்நுழைய',

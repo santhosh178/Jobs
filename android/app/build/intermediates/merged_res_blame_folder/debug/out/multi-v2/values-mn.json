@@ -1,7 +1,7 @@
 {
     "logs": [
         {
-            "outputFile": "com.bootstrap.app-mergeDebugResources-35:/values-mn/values-mn.xml",
+            "outputFile": "com.bootstrap.app-mergeDebugResources-36:/values-mn/values-mn.xml",
             "map": [
                 {
                     "source": "/home/test/.gradle/caches/transforms-3/9623e378e4dfc57c47793d0ffd25ee05/transformed/core-1.8.0/res/values-mn/values-mn.xml",

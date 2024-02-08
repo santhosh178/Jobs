@@ -13,7 +13,7 @@ const styles = StyleSheet.create({
         height: 40,
         backgroundColor: themeColor,
     },
-    bthText: {
+    btnText: {
         textAlign: 'center',
         color: '#fff',
         fontWeight: '600',
@@ -23,7 +23,7 @@ const styles = StyleSheet.create({
     modalBackground: {
         flex: 1,
         alignItems: 'center',
-        justifyContent :'center',
+        justifyContent: 'center',
         backgroundColor: '#e5e6e5',
     },
     activityIndicatorWrapper: {
@@ -86,61 +86,116 @@ const styles = StyleSheet.create({
     },
 
     /*------- Homepage  ------*/
+    overallListbackground: {
+        backgroundColor: 'white'
+    },
+    listHeader: {
+        fontFamily: 'OpenSans-Bold',
+        fontSize: 30,
+        marginLeft: 12,
+        marginTop: 14,
+        marginBottom: 0,
+        color: '#000000'
+    },
     card: {
         borderRadius: 10,
-        height: 140,
+        height: 132,
         margin: 12,
-        marginBottom:0,
-        padding: 10,
-        backgroundColor: '#fff',
+        marginBottom: 0,
+        padding: 14,
+        color: 'white',
+        backgroundColor: 'white',
+        textAlign: 'center',
+        gap: 8,
+        borderLeftWidth: 5,
     },
     box: {
-        shadowColor: "#000000",
-        shadowOffset: {
-            width: 0,
-            height: 6,
-        },
-        shadowOpacity: 0.20,
-        shadowRadius: 5.62,
-        elevation: 8,
+        elevation: 3,
+        shadowColor: '#000',
+        shadowOffset: { width: 0, height: 2 },
+        shadowOpacity: 0.1,
+        shadowRadius: 8,
+        backgroundColor: 'white',
     },
-    jobDescription : {
-        color:'black',
-        width:290,
-        fontSize :16,
-        fontFamily :'OpenSans-Bold',
+    jobDescription: {
+        color: 'black',
+        width: 310,
+        fontSize: 18,
+        fontFamily: 'OpenSans-SemiBold',
     },
-    status : {
-        fontFamily :'OpenSans-Bold',
-        color : 'green',
-    },
-    cardHeader : {
-        flexDirection : 'row',
-        justifyContent:'space-between'
-    },
-    categoryName : {
-        color : 'black',
-        fontStyle:'italic',
-        fontSize : 16,
-    },
-    mode : {
-        color : 'black',
-        fontSize : 14,  
-        opacity:0.6, 
-    },
-    payment: {
-        color : 'black',
-        fontSize : 16,
+    status: {
+        fontSize: 14,
+        width: 60,
         fontFamily: 'OpenSans-Bold',
     },
-    cardBottom : {
-        flexDirection : 'row',
-        justifyContent : 'space-between'
+    cardHeader: {
+        flexDirection: 'row',
+        justifyContent: 'space-between'
     },
-    jobTime : {
-        fontSize :12,
-        color : 'grey'
+    categoryName: {
+        color: '#9091CC',
+        textAlign: 'center',
+        fontSize: 16,
+        backgroundColor: '#F1F1FD',
+        borderRadius: 7,
     },
-
+    payment: {
+        color: 'black',
+        fontSize: 16,
+        fontFamily: 'OpenSans-Bold',
+    },
+    cardBottom: {
+        flexDirection: 'row',
+        justifyContent: 'space-between'
+    },
+    jobTime: {
+        fontSize: 12,
+        color: 'grey',
+    },
+    listBottomText: {
+        textAlign: 'center',
+        padding: 10,
+        color: 'lightgrey',
+    },
+    listLoader: {
+        padding: 10,
+    },
+    categoryView: {
+        width: 50,
+        height: 36,
+    }
 });
+
+export const getDynamicStyles = (status) => {
+    let statusColor;
+    let borderColor;
+
+    switch (status) {
+        case 'open':
+            statusColor = 'green';
+            borderColor = 'green';
+            break;
+        case 'working':
+            statusColor = 'blue';
+            borderColor = 'blue';
+            break;
+        case 'close':
+            statusColor = themeColor;
+            borderColor = themeColor;
+            break;
+        default:
+            statusColor = 'black';
+            borderColor = 'black';
+    }
+
+    return StyleSheet.create({
+        status: {
+            color: statusColor,
+        },
+        card: {
+            borderLeftColor: borderColor,
+        },
+    });
+};
+
 export default styles;

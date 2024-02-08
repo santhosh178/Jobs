@@ -5,7 +5,7 @@ import styles from "../../Themes/styles";
 const Button = ({ name }) => {
     return (
         <View style={styles.btn}>
-            <Text style={styles.bthText}>{name}</Text>
+            <Text style={styles.btnText}>{name}</Text>
         </View>
     )
 };

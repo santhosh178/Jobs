@@ -1,7 +1,7 @@
 {
     "logs": [
         {
-            "outputFile": "com.bootstrap.app-mergeDebugResources-35:/values-es-rUS/values-es-rUS.xml",
+            "outputFile": "com.bootstrap.app-mergeDebugResources-36:/values-es-rUS/values-es-rUS.xml",
             "map": [
                 {
                     "source": "/home/test/.gradle/caches/transforms-3/8a4582fcf4777cd70591117a23078262/transformed/appcompat-1.5.0/res/values-es-rUS/values-es-rUS.xml",

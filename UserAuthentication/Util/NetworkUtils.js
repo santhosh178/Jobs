@@ -11,7 +11,7 @@ const request = async (options,userSignout) => {
     'Content-Type': 'application/json',
   })
 
-  if (ACCESS_TOKEN) {
+  if (ACCESS_TOKEN) { 
     headers.append('Authorization', ACCESS_TOKEN);
   }
 
@@ -24,16 +24,40 @@ const request = async (options,userSignout) => {
     return Promise.reject(json);
   }
   if (json.status_code == 401) {
-    Alert.alert('', I18n.t('alert.session'), [
-      { text: I18n.t('alert.ok'), onPress: () => userSignout() },
-    ]);
+    userSignout();
+    Alert.alert(I18n.t('alert.session')
+    [{ text: I18n.t('alert.ok') }]);
+  }
+  return json;
+};
+
+const imageRequest = async (options) => {
+  const ACCESS_TOKEN = await EncryptedStorage.getItem('user-token');
+  const headers = new Headers({
+    Accept: '*',
+    'Content-Type': 'images/JPEG',
+  })
+
+  if (ACCESS_TOKEN) { 
+    headers.append('Authorization', ACCESS_TOKEN);
+  }
+
+  const defaulls = { headers: headers };
+  options = Object.assign({}, defaulls, options);
+
+  const response = await fetch(options.url,options);
+  const json = await response.blob();
+
+  if (!response.ok) {
+    return Promise.reject(json);
   }
   return json;
 };
 
 export function login(loginRequest) {
+  const urlWithParams = `${API_BASE_URL}/auth/login`;
   return request({
-    url: API_BASE_URL + '/auth/login',
+    url: urlWithParams,
     method: 'POST',
     body: JSON.stringify(loginRequest)
   });
@@ -53,14 +77,15 @@ export async function getCurrentUser(userSignout) {
 };
 
 export function signup(signupRequest) {
+  const urlWithParams = `${API_BASE_URL}/auth/signup`;
   return request({
-      url: API_BASE_URL + "/auth/signup",
+    url: urlWithParams,
       method: 'POST',
       body: JSON.stringify(signupRequest)
   });
 };
 
-export  function getJobs(queryParams) {
+export function getJobs(queryParams) {
   const urlWithParams = `${API_BASE_URL}/job/get_all_jobs?${getQueryString(queryParams)}`;
   return request({
     url: urlWithParams,
@@ -68,13 +93,44 @@ export  function getJobs(queryParams) {
   });
 };
 
-export  function getMyJobs(queryParams) {
+export function getMyJobs(queryParams) {
   const urlWithParams = `${API_BASE_URL}/job/get_user_jobs_details?${getQueryString(queryParams)}`;
   return request({
     url: urlWithParams,
     method: 'GET'
   });
 };
+
+export function addAssignerJobs(queryParams) {
+  const urlWithParams = `${API_BASE_URL}/job/update_job_assigner?${getQueryString(queryParams)}`;
+  return request({
+    url: urlWithParams,
+    method: 'POST'
+  });
+};
+export function getjobDetails(queryParams) {
+  const urlWithParams = `${API_BASE_URL}/job/get_job_id_details?${getQueryString(queryParams)}`;
+  return request({
+    url: urlWithParams,
+    method: 'GET'
+  });
+};
+
+export function getUserImage(queryParams) {
+  const urlWithParams = `${API_BASE_URL}/images/get_image?${getQueryString(queryParams)}`;
+  return imageRequest({
+    url: urlWithParams,
+    method: 'GET',
+  });
+};
+
+export function modifiedTime(queryParams) {
+  const urlWithParams = `${API_BASE_URL}/job/last_modified_time?${getQueryString(queryParams)}`;
+  return request({
+    url: urlWithParams,
+    method: 'GET'
+  });
+}
 
 function getQueryString(params) {
   return Object.entries(params)

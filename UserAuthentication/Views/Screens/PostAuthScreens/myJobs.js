@@ -1,82 +1,195 @@
-import React, { useState, useEffect } from "react";
-import { Text, View, FlatList, ActivityIndicator, Pressable } from "react-native";
-import { getMyJobs } from "../../../Util/NetworkUtils";
-import styles from "../../../Themes/styles";
+import React, { useState, useEffect, useMemo, useContext } from "react";
+import { Text, View, FlatList, ActivityIndicator, Pressable,RefreshControl } from "react-native";
+import { getMyJobs,getCurrentUser } from "../../../Util/NetworkUtils";
+import styles, { getDynamicStyles } from "../../../Themes/styles";
+import Warning from '../../../../assets/svg/warning.svg';
+import I18n from "../../../I18N/i18n";
+import Item from "./item";
+import AuthContext from "../../../Context/AuthContext/authContext";
 
 const MyJobs = ({ navigation }) => {
+  const [loading, setLoading] = useState(false);
+  const { userSignout } = useContext(AuthContext);
   const [data, setData] = useState([]);
-  const [lastJobId, setLastJobId] = useState(0);
+  const [lastTime, setLastTime] = useState('');
   const [loadingMore, setLoadingMore] = useState(false);
   const [hasMoreData, setHasMoreData] = useState(true);
   const limit = 5;
   const [backendLimitExists, setBackendLimitExists] = useState(false);
+  const [firstTimeEndReached, setFirstTimeEndReached] = useState(true);
+  const [refreshing, setRefreshing] = useState(false);
+  const [modifiedTimes, setModifiedTimes] = useState('');
+  const [count, SetCount] = useState(1);
+  const [newHasMoreData, setNewHasMoreData] = useState(false);
+  
+  // const onRefresh = async () => {
+  //   try {
+  //     setData([]);
+  //     setHasMoreData(false);
+  //     setNewHasMoreData(true);
+  //   } catch (error) {
+  //     setNewHasMoreData(false);
+  //     setLoadingMore(false);
+  //     console.error("Error during refresh:", error);
+  //   }
+  // };
 
   useEffect(() => {
-    getMyAllJobs();
+    onPress();
   }, [])
 
+  async function onPress() {
+    try {
+      setLoading(true);
+      await getCurrentUser(userSignout);
+      setLoading(false);
+    }
+    catch (error) {
+      console.warn(error);
+    }
+  };
   const params = {
-    lastJobId: (lastJobId),
-    limit: (limit),
+    limit: limit,
+  };
+  if (!firstTimeEndReached) {
+    params.lastModifiedTime = lastTime;
   };
 
-  async function getMyAllJobs() {
+  const values = {
+    limit: limit,
+    lastModifiedTime: modifiedTimes,
+  }
+
+  // async function getModifiedTime() {
+  //   try {
+  //     const newData = await modifiedTime(values);
+
+  //     if (newData.length > 0) {
+  //       const lastTimes = newData[newData.length - 1].modifiedTime;
+  //       setModifiedTimes(lastTimes.slice(0, 19).replace('T', ' '));
+
+  //       setData((prevData) => [...prevData, ...newData]);
+  //       if (newData.length < limit) {
+  //         setLoadingMore(false);
+  //         setFirstTimeEndReached(true);
+  //         setHasMoreData(true);
+  //         setNewHasMoreData(false);
+  //       } else {
+  //         setLoadingMore(true);
+  //         setHasMoreData(true);
+  //       }
+  //     }
+  //     else {
+  //       setLoadingMore(false);
+  //       setFirstTimeEndReached(true);
+  //       setHasMoreData(true);
+  //       setNewHasMoreData(false);
+  //     }
+  //   }
+  //   catch (error) {
+  //     setNewHasMoreData(false);
+  //     setLoadingMore(false);
+  //     console.log("error : ", error);
+  //   }
+  // };
+
+  async function getAllJobs() {
     try {
       const newJobs = await getMyJobs(params);
       if (newJobs.length > 0) {
-        setLastJobId(newJobs[newJobs.length - 1].id);
-        setData((prevData) => [...prevData, ...newJobs]);
-        setLoadingMore(true);
+        const newDataList = [...newJobs];
+        const lastTimes = newJobs[newJobs.length - 1].modifiedTime;
+        const firstModifiedTime = newJobs[0].modifiedTime;
+
+        if (newJobs.length <= limit) {
+          setData((prevData) => [...prevData, ...newDataList]);
+          setLastTime(lastTimes.slice(0, 19).replace('T', ' '));
+          if (count === 1) {
+            setModifiedTimes(firstModifiedTime.slice(0, 19).replace('T', ' '));
+            SetCount(count + 1);
+          }
+          else {
+            SetCount(count + 1);
+          }
+          setLoadingMore(true);
+          setFirstTimeEndReached(false);
+        } else {
+          setHasMoreData(false);
+          setLoadingMore(false);
+        }
       }
       else {
-        setHasMoreData(false);    // No more data available
+        setHasMoreData(false);
         setLoadingMore(false);
       }
     } catch (error) {
-      setBackendLimitExists(true);    // Backend limit exists
+      setBackendLimitExists(true);
+      setHasMoreData(false);
       setLoadingMore(false);
     }
   };
 
-  const Item = ({ item }) => (
-    <Pressable onPress={() => navigation.navigate('ItemDetails', item)}>
-      <View style={[styles.card, styles.box]}>
-        <View style={styles.cardHeader}>
-          <Text style={styles.jobDescription}>{item.jobDescription}</Text>
-          <Text style={styles.status}>{item.status}</Text>
-        </View>
-        <Text style={styles.categoryName}>{item.category.name}</Text>
-        <Text style={styles.mode}>{item.mode}</Text>
-        <View style={styles.cardBottom}>
-          <Text style={styles.payment}>${item.payment}</Text>
-          <Text style={styles.jobTime}>{item.jobTime}</Text>
-        </View>
-      </View>
-    </Pressable>
-  );
-
   return (
-    <View>
+    <View style={styles.overallListbackground}>
       <FlatList
+        ListHeaderComponent={
+          <View>
+            <Text style={styles.listHeader}>{I18n.t('home.screen_header_name')}</Text>
+          </View>}
         data={data}
-        renderItem={({ item }) => <Item item={item} />}
-        keyExtractor={(item) => item.id.toString()}
+        renderItem={({ item }) => <Item item={item} navigation={navigation} />}
+        keyExtractor={(item, index) => `${item.id}_${index}`}
+        // refreshControl={
+        //   <RefreshControl
+        //     refreshing={refreshing}
+        //     onRefresh={onRefresh}
+        //   />
+        // }
         onEndReached={() => {
           if (hasMoreData) {
-            getMyAllJobs();
+            getAllJobs();
           }
+          // if (newHasMoreData) {
+          //   getModifiedTime();
+          // }
         }}
         ListFooterComponent={() =>
           loadingMore ? (
-            <ActivityIndicator size="large" color="green" style={{ padding: 10 }} />
-          ) : hasMoreData && !backendLimitExists ? null : (
-            <Text style={{ textAlign: 'center', padding: 10, color: 'lightgrey' }}>
-              {backendLimitExists ? 'Limits exist' : 'No more data'}
-            </Text>
+            <ActivityIndicator size="large" color="green" style={styles.listLoader} />
           )
+            : (hasMoreData) ? null : (
+              <Text style={styles.listBottomText}>
+                {I18n.t('home.list_no_data')}
+              </Text>
+            )
         }
       />
     </View>
+    // <View style={styles.overallListbackground}>
+    //   <FlatList
+    //     ListHeaderComponent={<View>
+    //       <Text style={styles.listHeader}>My Jobs</Text>
+    //     </View>}
+    //     data={data}
+    //     renderItem={({ item }) => <Item item={item} />}
+    //     keyExtractor={(item, index) => `${item.id}_${index}`}
+    //     onEndReached={() => {
+    //       if (hasMoreData) {
+    //         getMyAllJobs();
+    //       }
+    //     }}
+    //     ListFooterComponent={() =>
+    //       loadingMore ? (
+    //         <ActivityIndicator size="large" color="green" style={styles.listLoader} />
+    //       )
+    //         : hasMoreData && !backendLimitExists ? null : (
+    //           <Text style={styles.listBottomText}>
+    //             {backendLimitExists ? I18n.t('home.list_backend_limit') : I18n.t('home.list_no_data')}
+    //           </Text>
+    //         )
+    //     }
+    //   />
+    // </View>
   )
 };
 

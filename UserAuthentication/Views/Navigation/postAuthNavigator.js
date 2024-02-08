@@ -16,6 +16,7 @@ const PostAuthNavigator = () => {
       <Screen
         name="ItemDetails"
         component={ItemDetails}
+        // options={{ headerShown: false }}
       />
     </Navigator>
   )

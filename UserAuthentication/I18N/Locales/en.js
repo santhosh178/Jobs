@@ -13,6 +13,8 @@ export default {
     home: {
         screen_header_name: 'All Jobs',
         screen_name: 'Home Screen',
+        list_backend_limit : 'Limits exist',
+        list_no_data : 'No more data',
     },
     button: {
         login: 'Login',

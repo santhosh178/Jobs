@@ -1,5 +1,5 @@
 import React from "react";
-import styles from "../Themes/styles";
+import styles, { themeColor } from "../Themes/styles";
 import { Modal, View, ActivityIndicator } from "react-native";
 
 const Loader = (props) => {
@@ -18,7 +18,7 @@ const Loader = (props) => {
                 <View style={styles.activityIndicatorWrapper}>
                     <ActivityIndicator
                         animating={true}
-                        color="#000000"
+                        color={themeColor}
                         size="large"
                         style={styles.activityIndicator}
                     />

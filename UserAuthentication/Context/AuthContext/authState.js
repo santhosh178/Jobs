@@ -9,7 +9,7 @@ const AuthState = (props) => {
     const onAuthentication = async (userToken) => {
         await EncryptedStorage.setItem('user-token', userToken);
         SetUserToken(userToken);
-        console.warn("user has been authenticated!");
+        // console.warn("user has been authenticated!");
     }
 
     useEffect(() => {
@@ -31,7 +31,7 @@ const AuthState = (props) => {
         try {
             await EncryptedStorage.removeItem('user-token');
             SetUserToken(null);
-            console.warn("User signout success!")
+            // console.warn("User signout success!")
         }
         catch (err) {
             console.warn(`Here's the error that occured while retrieving token : ${err}`)

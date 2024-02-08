@@ -8,6 +8,7 @@ MERGED from /home/test/Git-Clone/Jobs/android/app/src/main/AndroidManifest.xml:1
 MERGED from [com.facebook.flipper:flipper-network-plugin:0.182.0] /home/test/.gradle/caches/transforms-3/e47626a30834dcd66576d826bae55315/transformed/jetified-flipper-network-plugin-0.182.0/AndroidManifest.xml:8:1-15:12
 MERGED from [com.facebook.flipper:flipper-fresco-plugin:0.182.0] /home/test/.gradle/caches/transforms-3/927874504f02e490d8ef5fc541319ddd/transformed/jetified-flipper-fresco-plugin-0.182.0/AndroidManifest.xml:8:1-15:12
 MERGED from [com.facebook.flipper:flipper:0.182.0] /home/test/.gradle/caches/transforms-3/e13f88164840fe641a466d05cd8edac7/transformed/jetified-flipper-0.182.0/AndroidManifest.xml:8:1-18:12
+MERGED from [:react-native-community_blur] /home/test/Git-Clone/Jobs/node_modules/@react-native-community/blur/android/build/intermediates/merged_manifest/debug/AndroidManifest.xml:2:1-7:12
 MERGED from [:react-native-picker_picker] /home/test/Git-Clone/Jobs/node_modules/@react-native-picker/picker/android/build/intermediates/merged_manifest/debug/AndroidManifest.xml:2:1-7:12
 MERGED from [:react-native-encrypted-storage] /home/test/Git-Clone/Jobs/node_modules/react-native-encrypted-storage/android/build/intermediates/merged_manifest/debug/AndroidManifest.xml:2:1-8:12
 MERGED from [:react-native-i18n] /home/test/Git-Clone/Jobs/node_modules/react-native-i18n/android/build/intermediates/merged_manifest/debug/AndroidManifest.xml:2:1-7:12
@@ -58,6 +59,7 @@ MERGED from [androidx.startup:startup-runtime:1.1.1] /home/test/.gradle/caches/t
 MERGED from [androidx.tracing:tracing:1.1.0] /home/test/.gradle/caches/transforms-3/816103dcaf20cc3449d44e7aef228ddc/transformed/jetified-tracing-1.1.0/AndroidManifest.xml:17:1-24:12
 MERGED from [com.facebook.fresco:middleware:2.6.0] /home/test/.gradle/caches/transforms-3/64b55a0ad447c9d7608986823ffb3a12/transformed/jetified-middleware-2.6.0/AndroidManifest.xml:2:1-9:12
 MERGED from [com.facebook.fresco:ui-common:2.6.0] /home/test/.gradle/caches/transforms-3/c15a7e0a99bb25483d068fddbb8c4f6a/transformed/jetified-ui-common-2.6.0/AndroidManifest.xml:2:1-9:12
+MERGED from [com.github.Dimezis:BlurView:version-2.0.3] /home/test/.gradle/caches/transforms-3/89106c57999290cdc8805c699daf199b/transformed/jetified-BlurView-version-2.0.3/AndroidManifest.xml:2:1-11:12
 MERGED from [androidx.security:security-crypto:1.1.0-alpha03] /home/test/.gradle/caches/transforms-3/6f839f23ef934a5fe8dcfd3f444f1768/transformed/jetified-security-crypto-1.1.0-alpha03/AndroidManifest.xml:17:1-24:12
 MERGED from [androidx.coordinatorlayout:coordinatorlayout:1.2.0] /home/test/.gradle/caches/transforms-3/035927df51db2125608e6752bfbdd830/transformed/coordinatorlayout-1.2.0/AndroidManifest.xml:17:1-24:12
 MERGED from [androidx.sqlite:sqlite:2.2.0] /home/test/.gradle/caches/transforms-3/dc58477293179deb391b12c4cba55b48/transformed/sqlite-2.2.0/AndroidManifest.xml:17:1-24:12
@@ -123,6 +125,8 @@ MERGED from [androidx.lifecycle:lifecycle-process:2.4.1] /home/test/.gradle/cach
 MERGED from [androidx.lifecycle:lifecycle-process:2.4.1] /home/test/.gradle/caches/transforms-3/b1c537e6049df5a2dcb1a9b20b1a8868/transformed/jetified-lifecycle-process-2.4.1/AndroidManifest.xml:25:5-35:19
 MERGED from [androidx.startup:startup-runtime:1.1.1] /home/test/.gradle/caches/transforms-3/ce16fe979dbb8e21943e6d6fc151e0f0/transformed/jetified-startup-runtime-1.1.1/AndroidManifest.xml:25:5-31:19
 MERGED from [androidx.startup:startup-runtime:1.1.1] /home/test/.gradle/caches/transforms-3/ce16fe979dbb8e21943e6d6fc151e0f0/transformed/jetified-startup-runtime-1.1.1/AndroidManifest.xml:25:5-31:19
+MERGED from [com.github.Dimezis:BlurView:version-2.0.3] /home/test/.gradle/caches/transforms-3/89106c57999290cdc8805c699daf199b/transformed/jetified-BlurView-version-2.0.3/AndroidManifest.xml:9:5-20
+MERGED from [com.github.Dimezis:BlurView:version-2.0.3] /home/test/.gradle/caches/transforms-3/89106c57999290cdc8805c699daf199b/transformed/jetified-BlurView-version-2.0.3/AndroidManifest.xml:9:5-20
 MERGED from [androidx.core:core:1.8.0] /home/test/.gradle/caches/transforms-3/9623e378e4dfc57c47793d0ffd25ee05/transformed/core-1.8.0/AndroidManifest.xml:24:5-89
 MERGED from [androidx.core:core:1.8.0] /home/test/.gradle/caches/transforms-3/9623e378e4dfc57c47793d0ffd25ee05/transformed/core-1.8.0/AndroidManifest.xml:24:5-89
 MERGED from [androidx.versionedparcelable:versionedparcelable:1.1.1] /home/test/.gradle/caches/transforms-3/a1eec6f4e1f4253fcf428dd43a9fa3cd/transformed/versionedparcelable-1.1.1/AndroidManifest.xml:24:5-25:19
@@ -187,6 +191,8 @@ MERGED from [com.facebook.flipper:flipper-fresco-plugin:0.182.0] /home/test/.gra
 MERGED from [com.facebook.flipper:flipper-fresco-plugin:0.182.0] /home/test/.gradle/caches/transforms-3/927874504f02e490d8ef5fc541319ddd/transformed/jetified-flipper-fresco-plugin-0.182.0/AndroidManifest.xml:11:5-13:41
 MERGED from [com.facebook.flipper:flipper:0.182.0] /home/test/.gradle/caches/transforms-3/e13f88164840fe641a466d05cd8edac7/transformed/jetified-flipper-0.182.0/AndroidManifest.xml:11:5-13:41
 MERGED from [com.facebook.flipper:flipper:0.182.0] /home/test/.gradle/caches/transforms-3/e13f88164840fe641a466d05cd8edac7/transformed/jetified-flipper-0.182.0/AndroidManifest.xml:11:5-13:41
+MERGED from [:react-native-community_blur] /home/test/Git-Clone/Jobs/node_modules/@react-native-community/blur/android/build/intermediates/merged_manifest/debug/AndroidManifest.xml:5:5-44
+MERGED from [:react-native-community_blur] /home/test/Git-Clone/Jobs/node_modules/@react-native-community/blur/android/build/intermediates/merged_manifest/debug/AndroidManifest.xml:5:5-44
 MERGED from [:react-native-picker_picker] /home/test/Git-Clone/Jobs/node_modules/@react-native-picker/picker/android/build/intermediates/merged_manifest/debug/AndroidManifest.xml:5:5-44
 MERGED from [:react-native-picker_picker] /home/test/Git-Clone/Jobs/node_modules/@react-native-picker/picker/android/build/intermediates/merged_manifest/debug/AndroidManifest.xml:5:5-44
 MERGED from [:react-native-encrypted-storage] /home/test/Git-Clone/Jobs/node_modules/react-native-encrypted-storage/android/build/intermediates/merged_manifest/debug/AndroidManifest.xml:6:5-44
@@ -287,6 +293,8 @@ MERGED from [com.facebook.fresco:middleware:2.6.0] /home/test/.gradle/caches/tra
 MERGED from [com.facebook.fresco:middleware:2.6.0] /home/test/.gradle/caches/transforms-3/64b55a0ad447c9d7608986823ffb3a12/transformed/jetified-middleware-2.6.0/AndroidManifest.xml:5:5-7:41
 MERGED from [com.facebook.fresco:ui-common:2.6.0] /home/test/.gradle/caches/transforms-3/c15a7e0a99bb25483d068fddbb8c4f6a/transformed/jetified-ui-common-2.6.0/AndroidManifest.xml:5:5-7:41
 MERGED from [com.facebook.fresco:ui-common:2.6.0] /home/test/.gradle/caches/transforms-3/c15a7e0a99bb25483d068fddbb8c4f6a/transformed/jetified-ui-common-2.6.0/AndroidManifest.xml:5:5-7:41
+MERGED from [com.github.Dimezis:BlurView:version-2.0.3] /home/test/.gradle/caches/transforms-3/89106c57999290cdc8805c699daf199b/transformed/jetified-BlurView-version-2.0.3/AndroidManifest.xml:5:5-7:41
+MERGED from [com.github.Dimezis:BlurView:version-2.0.3] /home/test/.gradle/caches/transforms-3/89106c57999290cdc8805c699daf199b/transformed/jetified-BlurView-version-2.0.3/AndroidManifest.xml:5:5-7:41
 MERGED from [androidx.security:security-crypto:1.1.0-alpha03] /home/test/.gradle/caches/transforms-3/6f839f23ef934a5fe8dcfd3f444f1768/transformed/jetified-security-crypto-1.1.0-alpha03/AndroidManifest.xml:20:5-22:41
 MERGED from [androidx.security:security-crypto:1.1.0-alpha03] /home/test/.gradle/caches/transforms-3/6f839f23ef934a5fe8dcfd3f444f1768/transformed/jetified-security-crypto-1.1.0-alpha03/AndroidManifest.xml:20:5-22:41
 MERGED from [androidx.coordinatorlayout:coordinatorlayout:1.2.0] /home/test/.gradle/caches/transforms-3/035927df51db2125608e6752bfbdd830/transformed/coordinatorlayout-1.2.0/AndroidManifest.xml:20:5-22:41
