@@ -16,10 +16,27 @@ export default {
         list_backend_limit : 'Limits exist',
         list_no_data : 'No more data',
     },
+    addJob: {
+        header_name: 'Add Job',
+        mode: 'Mode',
+        immediate: 'immediate',
+        later: 'later',
+        date: 'Date',
+        time: 'Time',
+        job_description: 'Job Description',
+        category: 'Category',
+        select_category: 'Select',
+        address: 'Address',
+        payment: 'Enter your Payment',
+        
+    },
     button: {
         login: 'Login',
         signup: 'Signup',
-        logout: 'Logout'
+        logout: 'Logout',
+        submit: 'Submit',
+        addAddress: 'AddAddress',
+        cancel: 'Cancel',
     },
     alert: {
         Alert: 'Alert',
@@ -33,6 +50,14 @@ export default {
         phoneNumber: 'Please fill PhoneNumber',
         check_email_password: 'Please check your email or password',
         go_to_signup: 'Go to signup',
+        mode: 'Please fill Mode',
+        date: 'Please fill Date',
+        time: 'Please fill Time',
+        job_description: 'Please fill Job Description',
+        category: 'Please fill Select Category',
+        address: 'Please fill Address',
+        payment: 'Please fill Payment',
+        credit: 'credit balance is zero go to recharge',
     },
     placeholder: {
         name: 'Enter your name',

@@ -81,7 +81,7 @@ const LoginScreen = () => {
         >
             <Loader loading={loading} />
             <View>
-                <Image style={styles.loginImage} source={require('/home/test/Git-Clone/Jobs/UserAuthentication/Images/job.jpeg')} />
+                <Image style={styles.loginImage} source={require('/home/test/Home/web/workspace/Jobs/UserAuthentication/Images/job.jpeg')} />
             </View>
             <View style={styles.loginContainer}>
                 <Text style={styles.welcomeMsg}>{I18n.t('login.header_name')}</Text>

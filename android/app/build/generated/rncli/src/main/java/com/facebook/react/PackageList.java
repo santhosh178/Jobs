@@ -13,8 +13,12 @@ import java.util.ArrayList;
 
 // @react-native-community/blur
 import com.reactnativecommunity.blurview.BlurViewPackage;
+// @react-native-community/datetimepicker
+import com.reactcommunity.rndatetimepicker.RNDateTimePickerPackage;
 // @react-native-picker/picker
 import com.reactnativecommunity.picker.RNCPickerPackage;
+// react-native-document-picker
+import com.reactnativedocumentpicker.RNDocumentPickerPackage;
 // react-native-encrypted-storage
 import com.emeraldsanto.encryptedstorage.RNEncryptedStoragePackage;
 // react-native-i18n
@@ -73,7 +77,9 @@ public class PackageList {
     return new ArrayList<>(Arrays.<ReactPackage>asList(
       new MainReactPackage(mConfig),
       new BlurViewPackage(),
+      new RNDateTimePickerPackage(),
       new RNCPickerPackage(),
+      new RNDocumentPickerPackage(),
       new RNEncryptedStoragePackage(),
       new RNI18nPackage(),
       new SafeAreaContextPackage(),

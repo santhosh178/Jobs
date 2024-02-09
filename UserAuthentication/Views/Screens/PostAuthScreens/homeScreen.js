@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useContext, } from "react";
-import { Text, View, FlatList, ActivityIndicator, RefreshControl } from "react-native";
+import { Text, View, FlatList, ActivityIndicator, RefreshControl, Pressable, Image } from "react-native";
 import { getJobs, modifiedTime } from "../../../Util/NetworkUtils";
 import styles, { themeColor } from "../../../Themes/styles";
 import AuthContext from "../../../Context/AuthContext/authContext";
@@ -21,7 +21,7 @@ const HomeScreen = ({ navigation }) => {
   const [modifiedTimes, setModifiedTimes] = useState('');
   const [count, SetCount] = useState(1);
   const [newHasMoreData, setNewHasMoreData] = useState(false);
-  
+
   const onRefresh = async () => {
     try {
       setData([]);
@@ -133,9 +133,13 @@ const HomeScreen = ({ navigation }) => {
     <View style={styles.overallListbackground}>
       <FlatList
         ListHeaderComponent={
-          <View>
+          <View style={{flexDirection: 'row',justifyContent: 'space-between', margin: 14}}>
             <Text style={styles.listHeader}>{I18n.t('home.screen_header_name')}</Text>
-          </View>}
+            <Pressable onPress={() => navigation.navigate('Profile')}>
+                <Image style={styles.profileImage} source={require('/home/test/Home/web/workspace/Jobs/UserAuthentication/Images/profile.jpg')} />
+            </Pressable>
+          </View>
+        }
         data={data}
         renderItem={({ item }) => <Item item={item} navigation={navigation} />}
         keyExtractor={(item, index) => `${item.id}_${index}`}

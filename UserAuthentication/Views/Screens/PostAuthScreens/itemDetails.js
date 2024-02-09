@@ -1,11 +1,12 @@
 import React, { useEffect, useState, useMemo } from "react";
 import { View, Text, Pressable, Image, ActivityIndicator } from "react-native";
-import { addAssignerJobs, getUserImage, getjobDetails, login } from "../../../Util/NetworkUtils";
+import { addAssignerJobs, getUserImage, getjobDetails, } from "../../../Util/NetworkUtils";
 import Button from "../button";
-import { placeHolderTextColor, themeColor } from "../../../Themes/styles";
+import styles, { themeColor } from "../../../Themes/styles";
+import Back from "../../../../assets/svg/back.svg";
 
 const ItemDetails = ({ route, navigation }) => {
-    const { payment, mode, category, address, jobTime, id, status, getAllJobsApi, jobDescription,assigner, imageId, streetAddress, pinCode, state, country } = route.params;
+    const { payment, mode, category, address, jobTime, id, status, getAllJobsApi, jobDescription, assigner, imageId, streetAddress, pinCode, state, country } = route.params;
     const color = mode === 'immediate' ? themeColor : 'black';
     const [imageData, setImageData] = useState(null);
     const [data, setData] = useState([]);
@@ -49,7 +50,6 @@ const ItemDetails = ({ route, navigation }) => {
     };
 
     async function getImage() {
-        console.log(values);
         try {
             const imageData = await getUserImage(values);
             const base64Data = await blobToBase64(imageData);
@@ -82,7 +82,6 @@ const ItemDetails = ({ route, navigation }) => {
     async function addAssigner() {
         try {
             const newJobs = await addAssignerJobs(params);
-            console.log(newJobs);
             if (newJobs.success) {
                 setRefresh(true);
                 console.log('job updated success');
@@ -97,8 +96,13 @@ const ItemDetails = ({ route, navigation }) => {
 
     return (
         <View style={{ flex: 1, flexDirection: 'column', justifyContent: 'space-between', backgroundColor: '#FFFFFF' }}>
-            <View>
-                <Text></Text>
+            <View style={styles.header}>
+                <View style={styles.backSvg}>
+                    <Back onPress={() => {navigation.navigate('All Jobs')}} />
+                </View>
+                <View>
+                    <Text style={styles.headername}>Job Details</Text>
+                </View>
             </View>
             <View style={{ flex: 1, flexDirection: 'column', justifyContent: 'space-between', padding: 40 }}>
                 <View style={{ gap: 12 }}>
@@ -107,7 +111,7 @@ const ItemDetails = ({ route, navigation }) => {
                             <View style={{ width: 240, height: 200, alignItems: 'center', justifyContent: 'center' }}>
                                 <ActivityIndicator size="large" color={themeColor} />
                             </View>
-                        ) : (imageData ? <Image source={{ uri: `${imageData}` }} style={{ width: 240, height: 200, borderRadius: 20, resizeMode: fullImageVisible ? 'cover' : 'center' }} /> : <Image source={require('/home/test/Git-Clone/Jobs/UserAuthentication/Images/no-image.jpg')} style={{ width: 240, height: 200, borderRadius: 20 }} />)}
+                        ) : (imageData ? <Image source={{ uri: `${imageData}` }} style={{ width: 240, height: 200, borderRadius: 20, resizeMode: fullImageVisible ? 'cover' : 'center' }} /> : <Image source={require('/home/test/Home/web/workspace/Jobs/UserAuthentication/Images/no-image.jpg')} style={{ width: 240, height: 200, borderRadius: 20 }} />)}
                     </Pressable>
                     <Text style={{ fontFamily: 'OpenSans-SemiBold', fontSize: 26, alignSelf: 'center', color: 'black' }}>{categoryName.charAt(0).toUpperCase() + categoryName.slice(1)}</Text>
                     <Text style={{ fontSize: 18, alignSelf: 'center' }}>₹{data.payment}</Text>

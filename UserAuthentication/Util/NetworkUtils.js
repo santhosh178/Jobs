@@ -1,5 +1,5 @@
 import EncryptedStorage from "react-native-encrypted-storage";
-import { Alert } from "react-native";
+import { Alert,alert } from "react-native";
 import I18n from "../I18N/i18n";
 
 const API_BASE_URL = 'http://localhost:8080';
@@ -132,8 +132,41 @@ export function modifiedTime(queryParams) {
   });
 }
 
+export function addJobs(queryParams) {
+  const urlWithParams = `${API_BASE_URL}/job/add_job?${getQueryString(queryParams)}`;
+  console.log(urlWithParams);
+  return request({
+    url: urlWithParams,
+    method: 'POST'
+  });
+};
+
+export  function getCategory() {
+  const urlWithParams = `${API_BASE_URL}/category/get_all_category_list`;
+  return request({
+    url: urlWithParams,
+    method: 'GET'
+  });
+};
+
+export function getAddress() {
+  const urlWithParams = `${API_BASE_URL}/address/get_address`;
+  return request({
+    url: urlWithParams,
+    method: 'GET'
+  });
+};
+
+export function addAddress(addressRequest) {
+  return request({
+      url: API_BASE_URL + "/address/add_address",
+      method: 'POST',
+      body: JSON.stringify(addressRequest)
+  });
+};
+
 function getQueryString(params) {
   return Object.entries(params)
     .map(([key, value]) => `${encodeURIComponent(key)}=${encodeURIComponent(value)}`)
     .join('&');
-}
+};

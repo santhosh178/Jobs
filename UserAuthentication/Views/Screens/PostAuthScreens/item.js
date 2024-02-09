@@ -1,7 +1,6 @@
 import React, { memo, useMemo } from "react";
 import { Text, View, Pressable } from "react-native";
-import styles, { getDynamicStyles } from "../../../Themes/styles";
-import Warning from '../../../../assets/svg/warning.svg';
+import styles, { getDynamicStyles, themeColor } from "../../../Themes/styles";
 
 const Item = memo(({ item, navigation }) => {
     const { status, card } = getDynamicStyles(item.status);
@@ -27,8 +26,10 @@ const Item = memo(({ item, navigation }) => {
         <Pressable onPress={() => navigation.navigate('ItemDetails', item)}>
             <View style={[styles.card, styles.box, { backgroundColor: 'white' }, card]}>
                 <View style={styles.cardHeader}>
-                    <Text style={[styles.status, status]}>{item.status}</Text>
-                    {item.mode === 'immediate' && item.status === 'open' && <Warning width={24} heigh={24} />}
+                    <View style={{flexDirection: 'row',gap: 5}}>
+                        {item.mode === 'immediate' && item.status === 'open' && <View style={{ width: 8, height: 8, backgroundColor: themeColor, borderRadius: 2, marginTop: 7 }}></View>}
+                        <Text style={[styles.status, status]}>{item.status}</Text>
+                    </View>
                     <Text style={styles.jobTime}>{formattedDateTime}</Text>
                 </View>
                 <Text style={styles.jobDescription} numberOfLines={2} ellipsizeMode="tail">{item.jobDescription}</Text>

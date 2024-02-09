@@ -1,8 +1,7 @@
-import React, { useState, useEffect, useMemo, useContext } from "react";
-import { Text, View, FlatList, ActivityIndicator, Pressable,RefreshControl } from "react-native";
-import { getMyJobs,getCurrentUser } from "../../../Util/NetworkUtils";
-import styles, { getDynamicStyles } from "../../../Themes/styles";
-import Warning from '../../../../assets/svg/warning.svg';
+import React, { useState, useEffect, useContext } from "react";
+import { Text, View, FlatList, ActivityIndicator, RefreshControl } from "react-native";
+import { getMyJobs, getCurrentUser } from "../../../Util/NetworkUtils";
+import styles from "../../../Themes/styles";
 import I18n from "../../../I18N/i18n";
 import Item from "./item";
 import AuthContext from "../../../Context/AuthContext/authContext";
@@ -21,18 +20,18 @@ const MyJobs = ({ navigation }) => {
   const [modifiedTimes, setModifiedTimes] = useState('');
   const [count, SetCount] = useState(1);
   const [newHasMoreData, setNewHasMoreData] = useState(false);
-  
-  // const onRefresh = async () => {
-  //   try {
-  //     setData([]);
-  //     setHasMoreData(false);
-  //     setNewHasMoreData(true);
-  //   } catch (error) {
-  //     setNewHasMoreData(false);
-  //     setLoadingMore(false);
-  //     console.error("Error during refresh:", error);
-  //   }
-  // };
+
+  const onRefresh = async () => {
+    try {
+      setData([]);
+      setHasMoreData(false);
+      setNewHasMoreData(true);
+    } catch (error) {
+      setNewHasMoreData(false);
+      setLoadingMore(false);
+      console.error("Error during refresh:", error);
+    }
+  };
 
   useEffect(() => {
     onPress();
@@ -60,38 +59,38 @@ const MyJobs = ({ navigation }) => {
     lastModifiedTime: modifiedTimes,
   }
 
-  // async function getModifiedTime() {
-  //   try {
-  //     const newData = await modifiedTime(values);
+  async function getModifiedTime() {
+    try {
+      const newData = await modifiedTime(values);
 
-  //     if (newData.length > 0) {
-  //       const lastTimes = newData[newData.length - 1].modifiedTime;
-  //       setModifiedTimes(lastTimes.slice(0, 19).replace('T', ' '));
+      if (newData.length > 0) {
+        const lastTimes = newData[newData.length - 1].modifiedTime;
+        setModifiedTimes(lastTimes.slice(0, 19).replace('T', ' '));
 
-  //       setData((prevData) => [...prevData, ...newData]);
-  //       if (newData.length < limit) {
-  //         setLoadingMore(false);
-  //         setFirstTimeEndReached(true);
-  //         setHasMoreData(true);
-  //         setNewHasMoreData(false);
-  //       } else {
-  //         setLoadingMore(true);
-  //         setHasMoreData(true);
-  //       }
-  //     }
-  //     else {
-  //       setLoadingMore(false);
-  //       setFirstTimeEndReached(true);
-  //       setHasMoreData(true);
-  //       setNewHasMoreData(false);
-  //     }
-  //   }
-  //   catch (error) {
-  //     setNewHasMoreData(false);
-  //     setLoadingMore(false);
-  //     console.log("error : ", error);
-  //   }
-  // };
+        setData((prevData) => [...prevData, ...newData]);
+        if (newData.length < limit) {
+          setLoadingMore(false);
+          setFirstTimeEndReached(true);
+          setHasMoreData(true);
+          setNewHasMoreData(false);
+        } else {
+          setLoadingMore(true);
+          setHasMoreData(true);
+        }
+      }
+      else {
+        setLoadingMore(false);
+        setFirstTimeEndReached(true);
+        setHasMoreData(true);
+        setNewHasMoreData(false);
+      }
+    }
+    catch (error) {
+      setNewHasMoreData(false);
+      setLoadingMore(false);
+      console.log("error : ", error);
+    }
+  };
 
   async function getAllJobs() {
     try {
@@ -139,19 +138,19 @@ const MyJobs = ({ navigation }) => {
         data={data}
         renderItem={({ item }) => <Item item={item} navigation={navigation} />}
         keyExtractor={(item, index) => `${item.id}_${index}`}
-        // refreshControl={
-        //   <RefreshControl
-        //     refreshing={refreshing}
-        //     onRefresh={onRefresh}
-        //   />
-        // }
+        refreshControl={
+          <RefreshControl
+            refreshing={refreshing}
+            onRefresh={onRefresh}
+          />
+        }
         onEndReached={() => {
           if (hasMoreData) {
             getAllJobs();
           }
-          // if (newHasMoreData) {
-          //   getModifiedTime();
-          // }
+          if (newHasMoreData) {
+            getModifiedTime();
+          }
         }}
         ListFooterComponent={() =>
           loadingMore ? (
@@ -165,31 +164,6 @@ const MyJobs = ({ navigation }) => {
         }
       />
     </View>
-    // <View style={styles.overallListbackground}>
-    //   <FlatList
-    //     ListHeaderComponent={<View>
-    //       <Text style={styles.listHeader}>My Jobs</Text>
-    //     </View>}
-    //     data={data}
-    //     renderItem={({ item }) => <Item item={item} />}
-    //     keyExtractor={(item, index) => `${item.id}_${index}`}
-    //     onEndReached={() => {
-    //       if (hasMoreData) {
-    //         getMyAllJobs();
-    //       }
-    //     }}
-    //     ListFooterComponent={() =>
-    //       loadingMore ? (
-    //         <ActivityIndicator size="large" color="green" style={styles.listLoader} />
-    //       )
-    //         : hasMoreData && !backendLimitExists ? null : (
-    //           <Text style={styles.listBottomText}>
-    //             {backendLimitExists ? I18n.t('home.list_backend_limit') : I18n.t('home.list_no_data')}
-    //           </Text>
-    //         )
-    //     }
-    //   />
-    // </View>
   )
 };
 

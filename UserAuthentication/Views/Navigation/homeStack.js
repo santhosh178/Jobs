@@ -1,14 +1,13 @@
-import React from "react";
+import React, { useState } from "react";
 import HomeScreen from "../Screens/PostAuthScreens/homeScreen";
 import I18n from "../../I18N/i18n";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
-import ProfileScreen from "../Screens/PostAuthScreens/profileScreen";
 import MyJobs from "../Screens/PostAuthScreens/myJobs";
 import Home from '../../../assets/svg/home.svg';
-import Profile from '../../../assets/svg/profile (2).svg';
 import Businessman from '../../../assets/svg/businessman.svg';
 import { getFocusedRouteNameFromRoute } from "@react-navigation/native";
 import { themeColor } from "../../Themes/styles";
+import AddJob from "../Screens/addJob";
 
 const Tab = createBottomTabNavigator();
 
@@ -25,10 +24,7 @@ const getTabBarIcon = (routeName, focused) => {
             icon = <Home style={iconStyle} />;
             break;
         case 'My Jobs':
-            icon = <Businessman style={iconStyle}/>;
-            break;
-        case 'Profile':
-            icon = <Profile style={iconStyle}/>;
+            icon = <Businessman style={iconStyle} />;
             break;
         default:
             break;
@@ -47,7 +43,6 @@ const HomeStack = ({ route }) => {
                     borderTopWidth: 1,
                     borderTopColor: '#F3F3F3',
                 },
-
             })}
         >
             <Tab.Screen
@@ -60,20 +55,21 @@ const HomeStack = ({ route }) => {
                 }}
             />
             <Tab.Screen
+                name="Add Job"
+                component={AddJob}
+                options={{
+                    tabBarIcon: () => ( <AddJob />),
+                    tabBarLabel: () => null,
+                    headerShown: false,
+                }}
+            />
+            <Tab.Screen
                 name="My Jobs"
                 component={MyJobs}
                 options={{
                     tabBarIcon: ({ focused }) => getTabBarIcon('My Jobs', focused),
                     tabBarLabelStyle: { color: routeName === 'My Jobs' ? themeColor : 'black' },
                     headerShown: false,
-                }}
-            />
-            <Tab.Screen
-                name="Profile"
-                component={ProfileScreen}
-                options={{
-                    tabBarIcon: ({ focused }) => getTabBarIcon('Profile', focused),
-                    tabBarLabelStyle: { color: routeName === 'Profile' ? themeColor : 'black' },
                 }}
             />
         </Tab.Navigator>

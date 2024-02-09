@@ -103,7 +103,7 @@ const Signup = () => {
                     keyboardVerticalOffset={headerHeight}
                 >
                     <View>
-                        <Image style={styles.image} source={require('/home/test/Git-Clone/Jobs/UserAuthentication/Images/job.jpeg')} />
+                        <Image style={styles.image} source={require('/home/test/Home/web/workspace/Jobs/UserAuthentication/Images/job.jpeg')} />
                     </View>
                     <View style={[styles.signupContainer]}>
                         <Text style={styles.welcomeMsg}>{I18n.t('signup.header_name')}</Text>
@@ -131,6 +131,7 @@ const Signup = () => {
                         </TextInput>
                         <TextInput placeholder={I18n.t('placeholder.password')} style={styles.input}
                             value={password}
+                            secureTextEntry={true}
                             onChangeText={(value) => onInputChange(value, setPassword)}
                             placeholderTextColor={placeHolderTextColor}
                             returnKeyType="next"
@@ -142,6 +143,7 @@ const Signup = () => {
                         </TextInput>
                         <TextInput placeholder={I18n.t('placeholder.phoneNumber')} style={styles.input}
                             value={phoneNumber}
+                            keyboardType='number-pad'
                             returnKeyType="next"
                             onChangeText={(value) => onInputChange(value, setPhoneNumber)}
                             placeholderTextColor={placeHolderTextColor}
