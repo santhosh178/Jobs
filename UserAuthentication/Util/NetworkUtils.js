@@ -1,24 +1,24 @@
 import EncryptedStorage from "react-native-encrypted-storage";
-import { Alert,alert } from "react-native";
+import { Alert } from "react-native";
 import I18n from "../I18N/i18n";
 
 const API_BASE_URL = 'http://localhost:8080';
 
-const request = async (options,userSignout) => {
+const request = async (options, userSignout) => {
   const ACCESS_TOKEN = await EncryptedStorage.getItem('user-token');
   const headers = new Headers({
     Accept: 'application/json',
     'Content-Type': 'application/json',
   })
 
-  if (ACCESS_TOKEN) { 
+  if (ACCESS_TOKEN) {
     headers.append('Authorization', ACCESS_TOKEN);
   }
 
   const defaulls = { headers: headers };
   options = Object.assign({}, defaulls, options);
 
-  const response = await fetch(options.url,options);
+  const response = await fetch(options.url, options);
   const json = await response.json();
   if (!response.ok) {
     return Promise.reject(json);
@@ -38,16 +38,44 @@ const imageRequest = async (options) => {
     'Content-Type': 'images/JPEG',
   })
 
-  if (ACCESS_TOKEN) { 
+  if (ACCESS_TOKEN) {
     headers.append('Authorization', ACCESS_TOKEN);
   }
 
   const defaulls = { headers: headers };
   options = Object.assign({}, defaulls, options);
 
-  const response = await fetch(options.url,options);
+  const response = await fetch(options.url, options);
   const json = await response.blob();
 
+  if (!response.ok) {
+    return Promise.reject(json);
+  }
+  return json;
+};
+
+const addImageRequest = async (options) => {
+  const ACCESS_TOKEN = await EncryptedStorage.getItem('user-token');
+  const headers = new Headers({
+    'Content-Type': 'multipart/form-data',
+  })
+
+  if (ACCESS_TOKEN) {
+    headers.append('Authorization', ACCESS_TOKEN);
+  }
+
+  const defaulls = { headers: headers };
+  options = Object.assign({}, defaulls, options);
+
+  const response = await fetch(options.url, options);
+  const json = await response.json();
+  if (json.message == "You have not enough credit balance.") {
+    Alert.alert(
+      I18n.t('alert.Alert'),
+      I18n.t('alert.credit'),
+      [{ text: I18n.t('alert.ok') }]
+    );
+  }
   if (!response.ok) {
     return Promise.reject(json);
   }
@@ -72,16 +100,16 @@ export async function getCurrentUser(userSignout) {
   return request({
     url: urlWithParams,
     method: 'GET'
-    
-  },userSignout);
+
+  }, userSignout);
 };
 
 export function signup(signupRequest) {
   const urlWithParams = `${API_BASE_URL}/auth/signup`;
   return request({
     url: urlWithParams,
-      method: 'POST',
-      body: JSON.stringify(signupRequest)
+    method: 'POST',
+    body: JSON.stringify(signupRequest)
   });
 };
 
@@ -132,16 +160,43 @@ export function modifiedTime(queryParams) {
   });
 }
 
-export function addJobs(queryParams) {
+export function addJobs(queryParams, datas) {
   const urlWithParams = `${API_BASE_URL}/job/add_job?${getQueryString(queryParams)}`;
-  console.log(urlWithParams);
-  return request({
+  return addImageRequest({
     url: urlWithParams,
-    method: 'POST'
+    method: 'POST',
+    body: datas,
   });
 };
 
-export  function getCategory() {
+export function addImageUser(datas) {
+  const urlWithParams = `${API_BASE_URL}/user/add_image_user`;
+  console.log(urlWithParams);
+  return addImageRequest({
+    url: urlWithParams,
+    method: 'POST',
+    body: datas,
+  });
+};
+
+
+export function getImageData(imageId) {
+  const urlWithParams = `${API_BASE_URL}/images/get_image?imageId=${imageId}`;
+  return imageRequest({
+    url: urlWithParams,
+    method: 'GET'
+  });
+};
+
+export function getCredit() {
+  const urlWithParams = `${API_BASE_URL}/credit/get_credit`;
+  return request({
+    url: urlWithParams,
+    method: 'GET'
+  });
+};
+
+export function getCategory() {
   const urlWithParams = `${API_BASE_URL}/category/get_all_category_list`;
   return request({
     url: urlWithParams,
@@ -159,9 +214,9 @@ export function getAddress() {
 
 export function addAddress(addressRequest) {
   return request({
-      url: API_BASE_URL + "/address/add_address",
-      method: 'POST',
-      body: JSON.stringify(addressRequest)
+    url: API_BASE_URL + "/address/add_address",
+    method: 'POST',
+    body: JSON.stringify(addressRequest)
   });
 };
 

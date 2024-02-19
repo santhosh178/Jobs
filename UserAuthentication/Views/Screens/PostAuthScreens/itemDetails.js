@@ -15,7 +15,6 @@ const ItemDetails = ({ route, navigation }) => {
 
     const categoryName = data.category ? data.category.name : '';
 
-
     const formattedDateTime = useMemo(() => {
         const inputDateString = jobTime;
         const date = new Date(inputDateString);
@@ -46,8 +45,8 @@ const ItemDetails = ({ route, navigation }) => {
     }, []);
 
     const values = {
-        "imageId": id
-    };
+        "imageId": imageId
+    };  
 
     async function getImage() {
         try {

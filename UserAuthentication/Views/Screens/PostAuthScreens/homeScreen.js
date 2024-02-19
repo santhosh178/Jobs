@@ -6,6 +6,8 @@ import AuthContext from "../../../Context/AuthContext/authContext";
 import I18n from "../../../I18N/i18n";
 import { getCurrentUser } from "../../../Util/NetworkUtils";
 import Item from "./item";
+import { getImageData } from "../../../Util/NetworkUtils";
+
 
 const HomeScreen = ({ navigation }) => {
   const [loading, setLoading] = useState(false);
@@ -21,6 +23,9 @@ const HomeScreen = ({ navigation }) => {
   const [modifiedTimes, setModifiedTimes] = useState('');
   const [count, SetCount] = useState(1);
   const [newHasMoreData, setNewHasMoreData] = useState(false);
+
+  const [image, setImage] = useState([]);
+  const [imageData, setImageData] = useState(null);
 
   const onRefresh = async () => {
     try {
@@ -41,13 +46,30 @@ const HomeScreen = ({ navigation }) => {
   async function onPress() {
     try {
       setLoading(true);
-      await getCurrentUser(userSignout);
+      // setData(await getCurrentUser());
+      // console.log(data);
+      const userData = await getCurrentUser();
+      setImage(userData);
+
+      const imageData = await getImageData(userData.image_id);
+      const base64Data = await blobToBase64(imageData);
+      setImageData(base64Data);
       setLoading(false);
     }
     catch (error) {
-      console.warn(error);
+      // console.log(error);
     }
   };
+
+  function blobToBase64(blob) {
+    return new Promise((resolve, _) => {
+      const reader = new FileReader();
+      reader.onloadend = () => resolve(reader.result);
+      reader.readAsDataURL(blob);
+    });
+  };
+
+ 
   const params = {
     limit: limit,
   };
@@ -133,10 +155,14 @@ const HomeScreen = ({ navigation }) => {
     <View style={styles.overallListbackground}>
       <FlatList
         ListHeaderComponent={
-          <View style={{flexDirection: 'row',justifyContent: 'space-between', margin: 14}}>
+          <View style={styles.profileImageOverall}>
             <Text style={styles.listHeader}>{I18n.t('home.screen_header_name')}</Text>
             <Pressable onPress={() => navigation.navigate('Profile')}>
+              {imageData ? (
+                <Image style={styles.profileImage} source={{ uri: `${imageData}` }} />
+              ) : (
                 <Image style={styles.profileImage} source={require('/home/test/Home/web/workspace/Jobs/UserAuthentication/Images/profile.jpg')} />
+              )}
             </Pressable>
           </View>
         }

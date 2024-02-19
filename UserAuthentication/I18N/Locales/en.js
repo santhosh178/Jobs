@@ -28,7 +28,30 @@ export default {
         select_category: 'Select',
         address: 'Address',
         payment: 'Enter your Payment',
-        
+        upload_image: 'Upload Image', 
+    },
+    address: {
+        header_name: 'Address list',
+        street_address: 'Street Address',
+        city: 'City',
+        state: 'State',
+        pincode: 'Pincode',
+        country: 'Country',
+    },
+    addAddress: {
+        header_name: 'AddAddress',
+        street_name:'Door Number, Street Name',
+        latitude: 'Latitude',
+        longitude: 'Longitude',
+    },
+    profile: {
+        header_name: 'Profile',
+        rating: 'Rating',
+        credit: 'Credit',
+        choose_language: 'Choose language',
+        about: 'About',
+        send_feedback: 'Send feedback',
+        settings: 'Settings',
     },
     button: {
         login: 'Login',
@@ -58,6 +81,7 @@ export default {
         address: 'Please fill Address',
         payment: 'Please fill Payment',
         credit: 'credit balance is zero go to recharge',
+        image_size: 'upload image size maximum 50kb',
     },
     placeholder: {
         name: 'Enter your name',

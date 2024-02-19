@@ -13,8 +13,8 @@ export default {
   home: {
     screen_header_name: 'அனைத்து வேலைகள்',
     screen_name: 'முகப்புத் திரை',
-    list_backend_limit : 'வரம்புகள் உள்ளன',
-    list_no_data : 'மேலும் தரவு இல்லை',
+    list_backend_limit: 'வரம்புகள் உள்ளன',
+    list_no_data: 'மேலும் தரவு இல்லை',
   },
   addJob: {
     header_name: 'வேலையைச் சேர்க்கவும்',
@@ -28,6 +28,30 @@ export default {
     select_category: 'தேர்ந்தெடு',
     address: 'முகவரி',
     payment: 'உங்கள் கட்டணத்தை உள்ளிடவும்',
+    upload_image: 'படத்தை பதிவேற்றவும்',
+  },
+  address: {
+    header_name: 'முகவரி பட்டியல்',
+    street_address: 'தெரு முகவரி',
+    city: 'நகரம்',
+    state: 'மாநிலம்',
+    pincode: 'பின்கோடு',
+    country: 'நாடு',
+  },
+  addAddress: {
+    header_name: 'முகவரி சேர்',
+    street_name:'கதவு எண், தெரு பெயர்',
+    latitude: 'அட்சரேகை',
+    longitude: 'தீர்க்கரேகை',
+  },
+  profile: {
+    header_name: 'சுயவிவரம்',
+    rating: 'மதிப்பீடு',
+    credit: 'வரவு இருப்பு',
+    choose_language: 'மொழியைத் தேர்ந்தெடு',
+    about: 'பற்றி',
+    send_feedback: 'கருத்து அனுப்பு',
+    settings: 'அமைப்புகள்',
 },
   button: {
     login: 'உள்நுழைய',
@@ -57,6 +81,7 @@ export default {
     address: 'தயவுசெய்து முகவரியை நிரப்பவும்',
     payment: 'தயவுசெய்து கட்டணத்தை நிரப்பவும்',
     credit: 'கிரெடிட் பேலன்ஸ் பூஜ்ஜியம், ரீசார்ஜ் செய்ய செல்லுங்கள்',
+    image_size: 'அதிகபட்சமாக 50கேபி பட அளவு பதிவேற்றவும்',
   },
   placeholder: {
     name: 'உங்கள் பெயரை உள்ளிடவும்',

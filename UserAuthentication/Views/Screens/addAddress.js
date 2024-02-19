@@ -57,12 +57,12 @@ const AddAddress = ({ onAddAddress }) => {
                                 <Back onPress={() => setModalVisible(false)} />
                             </View>
                             <View>
-                                <Text style={styles.headername}>AddAddress</Text>
+                                <Text style={styles.headername}>{I18n.t('addAddress.header_name')}</Text>
                             </View>
                         </View>
 
                         <View style={styles.addJobTextInput}>
-                            <TextInput placeholder='Door Number, Street Name' style={styles.input}
+                            <TextInput placeholder={I18n.t('addAddress.street_name')} style={styles.input}
                                 value={streetAddress}
                                 onChangeText={(value) => onInputChange(value, setStreetAddress)}
                                 placeholderTextColor={placeholderTextColor}
@@ -73,7 +73,7 @@ const AddAddress = ({ onAddAddress }) => {
                             >
                             </TextInput>
 
-                            <TextInput placeholder='City' style={styles.input}
+                            <TextInput placeholder={I18n.t('address.city')} style={styles.input}
                                 value={city}
                                 onChangeText={(value) => onInputChange(value, setCity)}
                                 placeholderTextColor={placeholderTextColor}
@@ -85,7 +85,7 @@ const AddAddress = ({ onAddAddress }) => {
                             >
                             </TextInput>
 
-                            <TextInput placeholder='State' style={styles.input}
+                            <TextInput placeholder={I18n.t('address.state')} style={styles.input}
                                 value={state}
                                 onChangeText={(value) => onInputChange(value, setState)}
                                 placeholderTextColor={placeholderTextColor}
@@ -97,7 +97,7 @@ const AddAddress = ({ onAddAddress }) => {
                             >
                             </TextInput>
 
-                            <TextInput placeholder='Country' style={styles.input}
+                            <TextInput placeholder={I18n.t('address.country')} style={styles.input}
                                 value={country}
                                 onChangeText={(value) => onInputChange(value, setCountry)}
                                 placeholderTextColor={placeholderTextColor}
@@ -109,7 +109,7 @@ const AddAddress = ({ onAddAddress }) => {
                             >
                             </TextInput>
 
-                            <TextInput placeholder='PinCode' style={styles.input}
+                            <TextInput placeholder={I18n.t('address.pincode')} style={styles.input}
                                 value={pinCode}
                                 onChangeText={(value) => onInputChange(value, setPinCode)}
                                 placeholderTextColor={placeholderTextColor}
@@ -121,7 +121,7 @@ const AddAddress = ({ onAddAddress }) => {
                             >
                             </TextInput>
 
-                            <TextInput placeholder='Latitude' style={styles.input}
+                            <TextInput placeholder={I18n.t('addAddress.latitude')} style={styles.input}
                                 value={latitude}
                                 onChangeText={(value) => onInputChange(value, setLatitude)}
                                 placeholderTextColor={placeholderTextColor}
@@ -133,7 +133,7 @@ const AddAddress = ({ onAddAddress }) => {
                             >
                             </TextInput>
 
-                            <TextInput placeholder='Longitude' style={styles.input}
+                            <TextInput placeholder={I18n.t('addAddress.longitude')} style={styles.input}
                                 value={longitude}
                                 onChangeText={(value) => onInputChange(value, setLongitude)}
                                 placeholderTextColor={placeholderTextColor}
@@ -146,7 +146,7 @@ const AddAddress = ({ onAddAddress }) => {
 
                         <View style={styles.addAddressButton}>
                             <Pressable onPress={() => setModalVisible(false)}>
-                                <Button name={I18n.t('button.cancel')} />
+                                <Button name={I18n.t('button.cancel')} cancel={styles.cancelBtn}/>
                             </Pressable>
 
                             <Pressable onPress={addAddressApi}>

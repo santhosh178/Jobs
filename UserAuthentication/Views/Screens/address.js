@@ -56,15 +56,15 @@ const Address = ({ onSelectAddress, isVisible, onClose, }) => {
         }}
       >
         <View style={styles.addressCardList}>
-          <Text style={styles.addressCardText}>Street Address : {item.streetAddress}</Text>
-          <Text style={styles.addressCardText}>City : {item.city}</Text>
-          <Text style={styles.addressCardText}>State : {item.state}</Text>
-          <Text style={styles.addressCardText}>Pincode : {item.pinCode}</Text>
-          <Text style={styles.addressCardText}>Country : {item.country}</Text>
+          <Text style={styles.addressCardText}>{I18n.t('address.street_address')} : {item.streetAddress}</Text>
+          <Text style={styles.addressCardText}>{I18n.t('address.city')} : {item.city}</Text>
+          <Text style={styles.addressCardText}>{I18n.t('address.state')} : {item.state}</Text>
+          <Text style={styles.addressCardText}>{I18n.t('address.pincode')} : {item.pinCode}</Text>
+          <Text style={styles.addressCardText}>{I18n.t('address.country')} : {item.country}</Text>
         </View>
 
         {selectedAddress && selectedAddress.id === item.id && (
-          <View style={{ position: 'absolute', top: 6, right: 0 }}>
+          <View style={styles.selectAddress}>
             <Check  width={20} height={20} />
           </View>
         )}
@@ -88,7 +88,7 @@ const Address = ({ onSelectAddress, isVisible, onClose, }) => {
                 <Back onPress={onClose} />
               </View>
               <View>
-                <Text style={styles.headername}>Address list</Text>
+                <Text style={styles.headername}>{I18n.t('address.header_name')}</Text>
               </View>
             </View>
             <View>
@@ -100,7 +100,7 @@ const Address = ({ onSelectAddress, isVisible, onClose, }) => {
             </View>
             <View style={styles.addressCardButton}>
               <Pressable onPress={onClose}>
-                <Button name={I18n.t('button.cancel')} />
+                <Button name={I18n.t('button.cancel')} cancel={styles.cancelBtn}/>
               </Pressable>
               <AddAddress onAddAddress={onAddAddress} />
             </View>

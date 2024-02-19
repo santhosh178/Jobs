@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Text, View, Modal, Pressable, TextInput, ScrollView, TouchableOpacity, Alert, Linking } from "react-native";
+import { Text, View, Modal, Pressable, TextInput, ScrollView, TouchableOpacity, Alert } from "react-native";
 import Loader from "../loader";
 import styles, { placeHolderTextColor, placeholderTextColor, themeColor } from "../../Themes/styles";
 import Button from "./button";
@@ -13,7 +13,8 @@ import Address from "./address";
 import { getCategory } from "../../Util/NetworkUtils";
 import Back from "../../../assets/svg/back.svg";
 import Plus from "../../../assets/svg/plus.svg";
-
+import DocumentPicker, { types } from 'react-native-document-picker';
+import Cancel from "../../../assets/svg/cancel.svg";
 
 const AddJob = () => {
     const [modalVisible, setModalVisible] = useState(false);
@@ -39,6 +40,44 @@ const AddJob = () => {
 
     const [pressCount, setPressCount] = useState(0);
     const [timePressCount, setTimePressCount] = useState(0);
+
+    const [imageName, setImageName] = useState('');
+    const [imageType, setImageType] = useState('');
+    const [imageUri, setImageUri] = useState('');
+
+
+    /*------- image upload ---------*/
+    async function openGallery() {
+        try {
+            const res = await DocumentPicker.pick({
+                type: [DocumentPicker.types.allFiles],
+            });
+            const name = res[0]?.name;
+            const uri = res[0]?.uri;
+            const type = res[0]?.type;
+
+            const sizeInBytes = res[0]?.size;
+            const sizeInKilobytes = sizeInBytes / 1024;
+            if (sizeInKilobytes > 50) {
+                Alert.alert(
+                    I18n.t('alert.Alert'),
+                    I18n.t('alert.image_size'),
+                    [{ text: I18n.t('alert.ok') }]
+                );
+                return;
+            }
+            setImageName(name);
+            setImageType(type);
+            setImageUri(uri);
+        }
+        catch (err) {
+            if (DocumentPicker.isCancel(err)) {
+                console.log('User cancelled the picker');
+            } else {
+                console.log('Error: ', err);
+            }
+        }
+    }
 
     /*------- Focus ---------*/
     const [focusedInput, setFocusedInput] = useState(null);
@@ -71,6 +110,7 @@ const AddJob = () => {
                 setSelectedTime(new Date());
                 setTimeSelected(true);
             }
+
         }
     };
 
@@ -243,8 +283,14 @@ const AddJob = () => {
             jobTime: (`${formattedDate} ${formattedTime}`),
         };
         try {
+            const datas = new FormData();
+            datas.append('file', {
+                uri: imageUri,
+                name: imageName,
+                type: imageType,
+            });
             setLoading(true);
-            const data = await addJobs(values);
+            const data = await addJobs(values, datas);
             setModalVisible(false);
             setLoading(false);
             setMode('');
@@ -254,18 +300,14 @@ const AddJob = () => {
             setDateSelected('');
             setTimeSelected('');
             setSelectedAddress('');
+            setImageName('');
         }
         catch (error) {
             setLoading(false)
-            Alert.alert(
-                I18n.t('alert.Alert'),
-                I18n.t('alert.credit'),
-                [{ text: I18n.t('alert.ok') }]
-            );
+            console.log(error);
             return;
         }
-
-    }
+    };
 
     return (
         <View>
@@ -279,7 +321,7 @@ const AddJob = () => {
                     <View>
                         <View style={styles.header}>
                             <View style={styles.backSvg}>
-                                <Back onPress={() => { setModalVisible(false); setMode(''); setJobDescription(''); setSelectedCategory(''); setPayment(''); setDateSelected(''); setTimeSelected(''); setSelectedAddress('') }} />
+                                <Back onPress={() => { setModalVisible(false); setMode(''); setJobDescription(''); setSelectedCategory(''); setPayment(''); setDateSelected(''); setTimeSelected(''); setSelectedAddress(''), setImageName(''); }} />
                             </View>
                             <View>
                                 <Text style={styles.headername}>{I18n.t('addJob.header_name')}</Text>
@@ -473,11 +515,25 @@ const AddJob = () => {
                                 >
                                 </TextInput>
                             </View>
+
+
+                            <Pressable onPress={openGallery} style={styles.uploadImageOverAll}>
+                                {imageName ? (
+                                    <View style={styles.uploadImageView}>
+                                        <Text style={styles.uploadImageViewName} numberOfLines={1} ellipsizeMode="tail">{imageName}</Text>
+                                        <Pressable onPress={() => setImageName('')} style={styles.uploadImageCancelButton}>
+                                            <Cancel width={25} height={25} />
+                                        </Pressable>
+                                    </View>
+                                ) : (
+                                    <Text style={styles.uploadImageText}>{I18n.t('addJob.upload_image')}</Text>
+                                )}
+                            </Pressable>
                         </View>
 
 
                         <View style={styles.addJobButton}>
-                            <Pressable onPress={() => { setModalVisible(false); setMode(''); setJobDescription(''); setPayment(''); setSelectedCategory(''); setDateSelected(''); setTimeSelected(''); setSelectedAddress(''); }}>
+                            <Pressable onPress={() => { setModalVisible(false); setMode(''); setJobDescription(''); setPayment(''); setSelectedCategory(''); setDateSelected(''); setTimeSelected(''); setSelectedAddress(''); setImageName(''); }}>
                                 <Button name={I18n.t('button.cancel')} cancel={styles.cancelBtn} />
                             </Pressable>
 
@@ -490,8 +546,8 @@ const AddJob = () => {
             </Modal>
 
 
-            <Pressable onPress={() => setModalVisible(true)}>
-                <Plus width={47} heigth={47} />
+            <Pressable onPress={() => setModalVisible(true)} style={styles.addJobPlusButton}>
+                <Plus width={47} height={47} />
             </Pressable>
         </View>
     )
