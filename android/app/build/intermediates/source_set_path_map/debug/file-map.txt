@@ -46,7 +46,8 @@ com.bootstrap.app-packaged_res-44 /home/test/Home/web/workspace/Jobs/node_module
 com.bootstrap.app-packaged_res-45 /home/test/Home/web/workspace/Jobs/node_modules/react-native-encrypted-storage/android/build/intermediates/packaged_res/debug
 com.bootstrap.app-packaged_res-46 /home/test/Home/web/workspace/Jobs/node_modules/react-native-i18n/android/build/intermediates/packaged_res/debug
 com.bootstrap.app-packaged_res-47 /home/test/Home/web/workspace/Jobs/node_modules/react-native-image-picker/android/build/intermediates/packaged_res/debug
-com.bootstrap.app-packaged_res-48 /home/test/Home/web/workspace/Jobs/node_modules/react-native-safe-area-context/android/build/intermediates/packaged_res/debug
-com.bootstrap.app-packaged_res-49 /home/test/Home/web/workspace/Jobs/node_modules/react-native-screens/android/build/intermediates/packaged_res/debug
-com.bootstrap.app-packaged_res-50 /home/test/Home/web/workspace/Jobs/node_modules/react-native-svg/android/build/intermediates/packaged_res/debug
-com.bootstrap.app-packaged_res-51 /home/test/Home/web/workspace/Jobs/node_modules/react-native-vector-icons/android/build/intermediates/packaged_res/debug
+com.bootstrap.app-packaged_res-48 /home/test/Home/web/workspace/Jobs/node_modules/react-native-pager-view/android/build/intermediates/packaged_res/debug
+com.bootstrap.app-packaged_res-49 /home/test/Home/web/workspace/Jobs/node_modules/react-native-safe-area-context/android/build/intermediates/packaged_res/debug
+com.bootstrap.app-packaged_res-50 /home/test/Home/web/workspace/Jobs/node_modules/react-native-screens/android/build/intermediates/packaged_res/debug
+com.bootstrap.app-packaged_res-51 /home/test/Home/web/workspace/Jobs/node_modules/react-native-svg/android/build/intermediates/packaged_res/debug
+com.bootstrap.app-packaged_res-52 /home/test/Home/web/workspace/Jobs/node_modules/react-native-vector-icons/android/build/intermediates/packaged_res/debug

@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext, } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { Text, View, FlatList, ActivityIndicator, RefreshControl, Pressable, Image } from "react-native";
 import { getJobs, modifiedTime } from "../../../Util/NetworkUtils";
 import styles, { themeColor } from "../../../Themes/styles";
@@ -8,11 +8,15 @@ import { getCurrentUser } from "../../../Util/NetworkUtils";
 import Item from "./item";
 import { getImageData } from "../../../Util/NetworkUtils";
 
+import { useFocusEffect } from "@react-navigation/native";
 
-const HomeScreen = ({ navigation }) => {
+const HomeScreen = ({ navigation, route }) => {
+  const { itemDetailsScreen } = route.params;
   const [loading, setLoading] = useState(false);
   const { userSignout } = useContext(AuthContext);
   const [data, setData] = useState([]);
+  const [newData, setNewData] = useState([]);
+
   const [lastTime, setLastTime] = useState('');
   const [loadingMore, setLoadingMore] = useState(false);
   const [hasMoreData, setHasMoreData] = useState(true);
@@ -23,6 +27,9 @@ const HomeScreen = ({ navigation }) => {
   const [modifiedTimes, setModifiedTimes] = useState('');
   const [count, SetCount] = useState(1);
   const [newHasMoreData, setNewHasMoreData] = useState(false);
+  const [itemDetailsScreenOpen, setItemDetailsScreenOpen] = useState(itemDetailsScreen);
+  const [newCount, setNewCount] = useState(0);
+  const [newModifiedData, setNewModifiedData] = useState([]);
 
   const [image, setImage] = useState([]);
   const [imageData, setImageData] = useState(null);
@@ -38,6 +45,15 @@ const HomeScreen = ({ navigation }) => {
       console.error("Error during refresh:", error);
     }
   };
+
+  useFocusEffect(
+    React.useCallback(() => {
+      if (itemDetailsScreenOpen) {
+        onRefresh();
+        setItemDetailsScreenOpen(itemDetailsScreen);
+      }
+    }, [itemDetailsScreen])
+  );
 
   useEffect(() => {
     onPress();
@@ -84,28 +100,44 @@ const HomeScreen = ({ navigation }) => {
 
   async function getModifiedTime() {
     try {
-      const newData = await modifiedTime(values);
-
-      if (newData.length > 0) {
-        const lastTimes = newData[newData.length - 1].modifiedTime;
-        setModifiedTimes(lastTimes.slice(0, 19).replace('T', ' '));
-
-        setData((prevData) => [...prevData, ...newData]);
-        if (newData.length < limit) {
-          setLoadingMore(false);
-          setFirstTimeEndReached(true);
-          setHasMoreData(true);
-          setNewHasMoreData(false);
-        } else {
-          setLoadingMore(true);
-          setHasMoreData(true);
-        }
+      setNewCount(0);
+      const newDatas = await modifiedTime(values);
+      if (newDatas.length > 0) {
+        setNewCount(0);
+        const lastTimess = newDatas[newDatas.length - 1].modifiedTime;
+        setModifiedTimes(lastTimess.slice(0, 19).replace('T', ' '));
+        setData((prevData) => [...prevData, ...newDatas]);
+        setNewModifiedData(newDatas);
+        setNewCount(1);
       }
       else {
-        setLoadingMore(false);
-        setFirstTimeEndReached(true);
-        setHasMoreData(true);
-        setNewHasMoreData(false);
+        if (newCount === 1) {
+          setNewCount(0);
+          setData([]);
+          const newArrayWithoutFirstElement = [...newData];
+          newArrayWithoutFirstElement.slice(1);
+          setData((prevData) => [...prevData, ...newModifiedData]);
+          setData((prevData) => [...prevData, ...newData]);
+
+          const loadData = newArrayWithoutFirstElement[newArrayWithoutFirstElement.length - 1];
+          if (loadData) {
+            setLastTime(loadData.modifiedTime.slice(0, 19).replace('T', ' '));
+          }
+          setHasMoreData(true);
+          setNewHasMoreData(false);
+        }
+        else {
+          setNewCount(0);
+          setData([]);
+          setData((prevData) => [...prevData, ...newModifiedData]);
+          setData((prevData) => [...prevData, ...newData]);
+          const loadData = newData[newData.length - 1];
+          if (loadData) {
+            setLastTime(loadData.modifiedTime.slice(0, 19).replace('T', ' '));
+          }
+          setHasMoreData(true);
+          setNewHasMoreData(false);
+        }
       }
     }
     catch (error) {
@@ -125,6 +157,7 @@ const HomeScreen = ({ navigation }) => {
 
         if (newJobs.length <= limit) {
           setData((prevData) => [...prevData, ...newDataList]);
+          setNewData((prevData) => [...prevData, ...newDataList]);
           setLastTime(lastTimes.slice(0, 19).replace('T', ' '));
           if (count === 1) {
             setModifiedTimes(firstModifiedTime.slice(0, 19).replace('T', ' '));
@@ -136,7 +169,7 @@ const HomeScreen = ({ navigation }) => {
           setLoadingMore(true);
           setFirstTimeEndReached(false);
         } else {
-          setHasMoreData(false);
+          setHasMoreData(true);
           setLoadingMore(false);
         }
       }
@@ -148,6 +181,15 @@ const HomeScreen = ({ navigation }) => {
       setBackendLimitExists(true);
       setHasMoreData(false);
       setLoadingMore(false);
+    }
+  };
+
+  const handleEndReached = () => {
+    if (hasMoreData) {
+      getAllJobs();
+    }
+    if (newHasMoreData) {
+      getModifiedTime();
     }
   };
 
@@ -167,7 +209,7 @@ const HomeScreen = ({ navigation }) => {
           </View>
         }
         data={data}
-        renderItem={({ item }) => <Item item={item} navigation={navigation} />}
+        renderItem={({ item }) => <Item item={item} navigation={navigation} onNavigateToItemDetails={() => setItemDetailsScreenOpen(true)} />}
         keyExtractor={(item, index) => `${item.id}_${index}`}
         refreshControl={
           <RefreshControl
@@ -176,24 +218,28 @@ const HomeScreen = ({ navigation }) => {
             color={themeColor}
           />
         }
-        onEndReached={() => {
-          if (hasMoreData) {
-            getAllJobs();
-          }
-          if (newHasMoreData) {
-            getModifiedTime();
-          }
-        }}
+        onEndReached={handleEndReached}
         ListFooterComponent={() =>
           loadingMore ? (
             <ActivityIndicator size="large" color={themeColor} style={styles.listLoader} />
           )
-            : (hasMoreData) ? null : (
-              <Text style={styles.listBottomText}>
-                {I18n.t('home.list_no_data')}
-              </Text>
+            : hasMoreData ? null : (
+              data.length > 0 ? (
+                <Text style={styles.listBottomText}>
+                  {I18n.t('home.list_no_data')}
+                </Text>
+              ) : null
             )
         }
+      // ListEmptyComponent={() =>
+      //   data.length === 0 ? (
+      //     <View style={{ height: 640, alignSelf: 'center', justifyContent: 'center' }}>
+      //       <Text>
+      //         {I18n.t('home.list_no_data')}
+      //       </Text>
+      //     </View>
+      //   ) : null
+      // }
       />
     </View>
   )

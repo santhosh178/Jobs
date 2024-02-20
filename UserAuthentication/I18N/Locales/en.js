@@ -13,8 +13,10 @@ export default {
     home: {
         screen_header_name: 'All Jobs',
         screen_name: 'Home Screen',
-        list_backend_limit : 'Limits exist',
-        list_no_data : 'No more data',
+        list_backend_limit: 'Limits exist',
+        list_no_data: 'No more data',
+        unassigned: 'Unassigned',
+        assigned: 'Assigned',
     },
     addJob: {
         header_name: 'Add Job',
@@ -60,6 +62,7 @@ export default {
         submit: 'Submit',
         addAddress: 'AddAddress',
         cancel: 'Cancel',
+        pick_job: 'pick job'
     },
     alert: {
         Alert: 'Alert',
@@ -82,6 +85,10 @@ export default {
         payment: 'Please fill Payment',
         credit: 'credit balance is zero go to recharge',
         image_size: 'upload image size maximum 50kb',
+        pick_job: 'pick the job',
+        assigner: 'Your are the job added no pick the job',
+        delete_job: 'delete the job',
+        no_delete: 'You are not authorized to delete this job',
     },
     placeholder: {
         name: 'Enter your name',
@@ -89,5 +96,13 @@ export default {
         password: 'Enter your password',
         phoneNumber: 'Enter your phoneNumber',
     },
+
+    jobDetails: {
+        job_details: 'Job Details',
+        job_description: 'Job description',
+        address: 'Address',
+        job_time: 'JobTime',
+        assigner: 'assigner',
+    }
 };
 

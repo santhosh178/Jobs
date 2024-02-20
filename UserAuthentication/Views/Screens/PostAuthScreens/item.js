@@ -1,9 +1,11 @@
 import React, { memo, useMemo } from "react";
 import { Text, View, Pressable } from "react-native";
-import styles, { getDynamicStyles, themeColor } from "../../../Themes/styles";
+import styles, { getDynamicStyles } from "../../../Themes/styles";
+import I18n from "../../../I18N/i18n";
 
-const Item = memo(({ item, navigation }) => {
+const Item = memo(({ item, navigation, onNavigateToItemDetails }) => {
     const { status, card } = getDynamicStyles(item.status);
+    const assingerName = item.assigner ? item.assigner.name : '';
 
     const formattedDateTime = useMemo(() => {
         const inputDateString = item.jobTime;
@@ -23,21 +25,28 @@ const Item = memo(({ item, navigation }) => {
     }, [item.jobTime]);
 
     return (
-        <Pressable onPress={() => navigation.navigate('ItemDetails', item)}>
-            <View style={[styles.card, styles.box, { backgroundColor: 'white' }, card]}>
+        <Pressable onPress={() => {
+            onNavigateToItemDetails();
+            navigation.navigate('ItemDetails', item)
+        }}>
+            <View style={[styles.card, styles.box, card]}>
                 <View style={styles.cardHeader}>
-                    <View style={{flexDirection: 'row',gap: 5}}>
-                        {item.mode === 'immediate' && item.status === 'open' && <View style={{ width: 8, height: 8, backgroundColor: themeColor, borderRadius: 2, marginTop: 7 }}></View>}
+                    <View style={styles.cardHeaderLine}>
+                        {item.mode === 'immediate' && <View style={styles.square}></View>}
                         <Text style={[styles.status, status]}>{item.status}</Text>
                     </View>
                     <Text style={styles.jobTime}>{formattedDateTime}</Text>
                 </View>
                 <Text style={styles.jobDescription} numberOfLines={2} ellipsizeMode="tail">{item.jobDescription}</Text>
-                <View style={styles.cardBottom}>
+                <View>
                     <View style={styles.categoryView}>
                         <Text style={styles.categoryName}>{item.category.name}</Text>
                     </View>
+                </View>
+                <View style={styles.cardBottom}>
+                    <Text style={{ width: 100 }}>{item.assigner ? `${I18n.t('home.assigned')} : ${assingerName}` : I18n.t('home.unassigned')}</Text>
                     <Text style={styles.payment}>₹{item.payment}</Text>
+
                 </View>
             </View>
         </Pressable>

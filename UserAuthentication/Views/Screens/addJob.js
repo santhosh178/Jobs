@@ -16,7 +16,8 @@ import Plus from "../../../assets/svg/plus.svg";
 import DocumentPicker, { types } from 'react-native-document-picker';
 import Cancel from "../../../assets/svg/cancel.svg";
 
-const AddJob = () => {
+
+const AddJob = ({initialParams,updateItemDetailsScreenOpen}) => {
     const [modalVisible, setModalVisible] = useState(false);
     const [loading, setLoading] = useState(false);
     const [jobDescription, setJobDescription] = useState('');
@@ -78,6 +79,8 @@ const AddJob = () => {
             }
         }
     }
+
+  const [itemDetailsScreenOpen, setItemDetailsScreenOpen] = useState(initialParams);
 
     /*------- Focus ---------*/
     const [focusedInput, setFocusedInput] = useState(null);
@@ -291,6 +294,7 @@ const AddJob = () => {
             });
             setLoading(true);
             const data = await addJobs(values, datas);
+            updateItemDetailsScreenOpen(true);
             setModalVisible(false);
             setLoading(false);
             setMode('');

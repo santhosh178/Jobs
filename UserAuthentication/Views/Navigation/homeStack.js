@@ -35,6 +35,12 @@ const getTabBarIcon = (routeName, focused) => {
 
 const HomeStack = ({ route }) => {
     const routeName = getFocusedRouteNameFromRoute(route) ?? 'All Jobs';
+    const [itemDetailsScreen, setItemDetailsScreen] = useState(false);
+
+    const updateItemDetailsScreenOpen = (value) => {
+        setItemDetailsScreen(value);
+    };
+
     return (
         <Tab.Navigator
             initialRouteName="All Jobs"
@@ -50,27 +56,30 @@ const HomeStack = ({ route }) => {
                 component={HomeScreen}
                 options={{
                     tabBarIcon: ({ focused }) => getTabBarIcon(I18n.t('home.screen_header_name'), focused),
-                    tabBarLabelStyle: { color: routeName === I18n.t('home.screen_header_name') ? themeColor : 'black' },
+                    tabBarLabelStyle: { color: routeName === I18n.t('home.screen_header_name') ? themeColor : '#000000' },
                     headerShown: false,
                 }}
+                initialParams={{ itemDetailsScreen }}
             />
             <Tab.Screen
                 name="Add Job"
                 component={AddJob}
                 options={{
-                    tabBarIcon: () => ( <AddJob />),
+                    tabBarIcon: () => ( <AddJob initialParams={ itemDetailsScreen } updateItemDetailsScreenOpen={updateItemDetailsScreenOpen}/>),
                     tabBarLabel: () => null,
                     headerShown: false,
                 }}
+                
             />
             <Tab.Screen
                 name="My Jobs"
                 component={MyJobs}
                 options={{
                     tabBarIcon: ({ focused }) => getTabBarIcon('My Jobs', focused),
-                    tabBarLabelStyle: { color: routeName === 'My Jobs' ? themeColor : 'black' },
+                    tabBarLabelStyle: { color: routeName === 'My Jobs' ? themeColor : '#000000' },
                     headerShown: false,
                 }}
+                initialParams={{ itemDetailsScreen }}
             />
         </Tab.Navigator>
     )

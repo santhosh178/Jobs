@@ -220,6 +220,14 @@ export function addAddress(addressRequest) {
   });
 };
 
+export function jobDelete(queryParams) {
+  const urlWithParams = `${API_BASE_URL}/job/delete_job?${getQueryString(queryParams)}`;
+  return request({
+    url: urlWithParams,
+    method: 'GET',
+  });
+};
+
 function getQueryString(params) {
   return Object.entries(params)
     .map(([key, value]) => `${encodeURIComponent(key)}=${encodeURIComponent(value)}`)

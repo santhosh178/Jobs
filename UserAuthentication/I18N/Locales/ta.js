@@ -15,6 +15,8 @@ export default {
     screen_name: 'முகப்புத் திரை',
     list_backend_limit: 'வரம்புகள் உள்ளன',
     list_no_data: 'மேலும் தரவு இல்லை',
+    unassigned: 'ஒதுக்கப்படாதது',
+    assigned: 'ஒதுக்கப்படும்',
   },
   addJob: {
     header_name: 'வேலையைச் சேர்க்கவும்',
@@ -25,7 +27,7 @@ export default {
     time: 'நேரம்',
     job_description: 'வேலை விவரம்',
     category: 'வகை',
-    select_category: 'தேர்ந்தெடு',
+    select_category: 'தேர்ந்தெடு', 
     address: 'முகவரி',
     payment: 'உங்கள் கட்டணத்தை உள்ளிடவும்',
     upload_image: 'படத்தை பதிவேற்றவும்',
@@ -60,6 +62,7 @@ export default {
     submit: 'சமர்ப்பிக்க',
     addAddress: 'முகவரி சேர்',
     cancel: 'ரத்து செய்',
+    pick_job: 'வேலை தேர்வு',
   },
   alert: {
     Alert: 'எச்சரிக்கை',
@@ -82,6 +85,10 @@ export default {
     payment: 'தயவுசெய்து கட்டணத்தை நிரப்பவும்',
     credit: 'கிரெடிட் பேலன்ஸ் பூஜ்ஜியம், ரீசார்ஜ் செய்ய செல்லுங்கள்',
     image_size: 'அதிகபட்சமாக 50கேபி பட அளவு பதிவேற்றவும்',
+    pick_job: 'வேலையைத் தேர்ந்தெடுக்கவும்',
+    assigner: 'நீங்கள் வேலை சேர்க்கவில்லை வேலை இல்லை',
+    delete_job: 'வேலையை நீக்கு',
+    no_delete: 'இந்த வேலையை நீக்க உங்களுக்கு அங்கீகாரம் இல்லை',
   },
   placeholder: {
     name: 'உங்கள் பெயரை உள்ளிடவும்',
@@ -89,4 +96,12 @@ export default {
     password: 'உங்கள் கடவுச்சொல்லை உள்ளிடவும்',
     phoneNumber: 'உங்கள் தொடர்பு எண்ணை அளிக்கவும்',
   },
+
+  jobDetails: {
+    job_details: 'வேலை விவரங்கள்',
+    job_description: 'வேலை விவரம்',
+    address: 'முகவரி',
+    job_time: 'வேலை நேரம்',
+    assigner: 'ஒதுக்க',
+  }
 };

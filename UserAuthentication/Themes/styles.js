@@ -16,7 +16,7 @@ const styles = StyleSheet.create({
     },
     btnText: {
         textAlign: 'center',
-        color: '#fff',
+        color: '#FFFFFF',
         fontWeight: '600',
     },
     cancelBtn: {
@@ -57,7 +57,7 @@ const styles = StyleSheet.create({
     },
     welcomeMsg: {
         fontSize: 25,
-        color: 'black',
+        color: '#000000',
         width: 300,
         textAlign: 'center',
         fontFamily: 'OpenSans-Bold',
@@ -92,7 +92,12 @@ const styles = StyleSheet.create({
 
     /*------- Homepage  ------*/
     overallListbackground: {
-        backgroundColor: 'white'
+        backgroundColor: '#FFFFFF'
+    },
+    listHeaderView: {
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        margin: 14
     },
     listHeader: {
         fontFamily: 'OpenSans-Bold',
@@ -101,15 +106,16 @@ const styles = StyleSheet.create({
     },
     card: {
         borderRadius: 10,
-        height: 132,
+        height: 170,
         margin: 12,
         marginBottom: 0,
         padding: 14,
-        color: 'white',
-        backgroundColor: 'white',
+        color: '#FFFFFF',
+        backgroundColor: '#FFFFFF',
         textAlign: 'center',
         gap: 8,
         borderLeftWidth: 5,
+        position: 'relative'
     },
     box: {
         elevation: 3,
@@ -117,10 +123,10 @@ const styles = StyleSheet.create({
         shadowOffset: { width: 0, height: 2 },
         shadowOpacity: 0.1,
         shadowRadius: 8,
-        backgroundColor: 'white',
+        backgroundColor: '#FFFFFF',
     },
     jobDescription: {
-        color: 'black',
+        color: '#000000',
         width: 310,
         fontSize: 18,
         fontFamily: 'OpenSans-SemiBold',
@@ -136,7 +142,7 @@ const styles = StyleSheet.create({
     },
     categoryView: {
         backgroundColor: '#F1F1FD',
-        alignSelf: 'center',
+        alignSelf: 'flex-start',
         borderRadius: 7,
     },
     categoryName: {
@@ -144,30 +150,33 @@ const styles = StyleSheet.create({
         color: '#9091CC'
     },
     payment: {
-        color: 'black',
+        color: '#000000',
         fontSize: 16,
         fontFamily: 'OpenSans-Bold',
     },
     cardBottom: {
         flexDirection: 'row',
-        justifyContent: 'space-between'
+        position: 'absolute',
+        bottom: 13,
+        gap: 194,
+        paddingHorizontal: 14,
     },
     jobTime: {
         fontSize: 12,
-        color: 'grey'
+        color: '#808080'
     },
     listBottomText: {
         textAlign: 'center',
         padding: 10,
-        color: 'lightgrey',
+        color: '#D3D3D3',
     },
     listLoader: {
         padding: 10,
     },
     profileImageOverall: {
-        flexDirection: 'row', 
-        justifyContent: 'space-between', 
-        margin: 14 
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        margin: 14
     },
     profileImage: {
         width: 32,
@@ -265,7 +274,7 @@ const styles = StyleSheet.create({
     addressView: {
         borderBottomWidth: 1,
         width: 320,
-        color: 'black',
+        color: '#000000',
     },
     paymentOverall: {
         paddingHorizontal: 10,
@@ -274,45 +283,45 @@ const styles = StyleSheet.create({
     paymentTextInput: {
         borderBottomWidth: 1,
         width: 320,
-    },  
+    },
     uploadImageOverAll: {
         width: 340,
         paddingHorizontal: 10,
         paddingVertical: 5
     },
     uploadImageView: {
-        flexDirection: 'row', 
-        justifyContent: 'space-between', 
-        padding: 10, 
-        borderRadius: 10, 
-        borderWidth: 1, 
-        borderStyle: 'solid', 
-        color: 'white', 
-        backgroundColor: '#f2f2f2', 
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        padding: 10,
+        borderRadius: 10,
+        borderWidth: 1,
+        borderStyle: 'solid',
+        color: 'white',
+        backgroundColor: '#f2f2f2',
         borderColor: '#e6e6e6'
     },
     uploadImageViewName: {
         color: '#000',
         padding: 5
     },
-    uploadImageCancelButton:{
-        height: 30, 
-        width: 30, 
+    uploadImageCancelButton: {
+        height: 30,
+        width: 30,
         padding: 3,
     },
     uploadImageText: {
-        width: 320, 
-        height: 40, 
-        textAlign: 'center', 
-        padding: 5, 
-        borderRadius: 10, 
-        fontSize: 20, 
-        borderWidth: 1, 
-        borderStyle: 'dashed', 
-        color: 'black' 
+        width: 320,
+        height: 40,
+        textAlign: 'center',
+        padding: 5,
+        borderRadius: 10,
+        fontSize: 20,
+        borderWidth: 1,
+        borderStyle: 'dashed',
+        color: 'black'
     },
     addJobPlusButton: {
-        alignItems: 'center', 
+        alignItems: 'center',
         width: 131
     },
     addJobButton: {
@@ -339,13 +348,13 @@ const styles = StyleSheet.create({
         height: 180,
         margin: 12,
         padding: 10,
-        backgroundColor: '#fff',
+        backgroundColor: '#FFFFFF',
         borderRightWidth: 5,
         borderRightColor: themeColor,
     },
     addressCardText: {
         fontSize: 16,
-        color: 'black',
+        color: '#000000',
     },
     addressCardList: {
         gap: 10,
@@ -358,8 +367,8 @@ const styles = StyleSheet.create({
         margin: 15
     },
     selectAddress: {
-        position: 'absolute', 
-        top: 6, 
+        position: 'absolute',
+        top: 6,
         right: 0
     },
 
@@ -377,97 +386,217 @@ const styles = StyleSheet.create({
         alignItems: 'center',
     },
 
-
-     /*----------Profile Screen -------*/
-     profileOverall: {
+    /*----------Profile Screen -------*/
+    profileOverall: {
         paddingHorizontal: 20,
-     },
-     profileScreenImage: {
-        justifyContent: 'center', 
+    },
+    profileScreenImage: {
+        justifyContent: 'center',
         alignItems: 'center',
-     },
-     selectImage: {
-        width: 100, 
-        height: 100, 
+    },
+    selectImage: {
+        width: 100,
+        height: 100,
         borderRadius: 500
-     },
-     selectImageButton: {
-        position: 'absolute', 
-        top: 75, 
+    },
+    selectImageButton: {
+        position: 'absolute',
+        top: 75,
         left: 65
-     },
-     profileUser: {
+    },
+    profileUser: {
         paddingVertical: 15,
-     },
-     profileUserDetails: {
-        textAlign: 'center', 
-        fontSize: 20, 
+    },
+    profileUserDetails: {
+        textAlign: 'center',
+        fontSize: 20,
         color: '#000000',
-     },
-     ratingCreditOverall: {
-        flexDirection: 'row', 
-        gap: 10, 
-        paddingVertical: 20, 
-        justifyContent: 'center'
-     },
-     ratingCredit: {
-        width: 170, 
-        height: 85, 
-        backgroundColor: '#ffffff', 
-        borderRadius: 10, 
-        justifyContent: 'center', 
-        alignItems: 'center',
-     },
-     ratingCreditImage: {
-        flexDirection: 'row', 
-        gap: 7
-     },
-     radingCreditText: {
-        color: '#000000', 
-        fontSize: 16,
-     },
-     rating: {
-        color: '#000000', 
-        marginLeft: 15, 
-        padding: 5
-     },
-     creditImage: {
-        fontSize: 20, 
-        color: '#000000', 
-        textAlign: 'center'
-     },
-     creditText: {
-        color: '#000000',
-     },
-     profileFlatListOverall: {
-        width: 370, 
-        height: 60, 
-        backgroundColor: '#FFFFFF', 
-        paddingTop: 15, 
-        opacity: 0.7
-     }, 
-     flatList: {
+    },
+    ratingCreditOverall: {
         flexDirection: 'row',
-     },
-     flatListLeftSideImage: {
+        gap: 10,
+        paddingVertical: 20,
+        justifyContent: 'center'
+    },
+    ratingCredit: {
+        width: 170,
+        height: 85,
+        backgroundColor: '#ffffff',
+        borderRadius: 10,
+        justifyContent: 'center',
+        alignItems: 'center',
+    },
+    ratingCreditImage: {
+        flexDirection: 'row',
+        gap: 7
+    },
+    radingCreditText: {
+        color: '#000000',
+        fontSize: 16,
+    },
+    rating: {
+        color: '#000000',
+        marginLeft: 15,
+        padding: 5
+    },
+    creditImage: {
+        fontSize: 20,
+        color: '#000000',
+        textAlign: 'center'
+    },
+    creditText: {
+        color: '#000000',
+    },
+    profileFlatListOverall: {
+        width: 370,
+        height: 60,
+        backgroundColor: '#FFFFFF',
+        paddingTop: 15,
+        opacity: 0.7
+    },
+    flatList: {
+        flexDirection: 'row',
+    },
+    flatListLeftSideImage: {
         padding: 10,
-     },
-     flatListView: {
-        width: 310, 
-        flexDirection: 'row', 
+    },
+    flatListView: {
+        width: 310,
+        flexDirection: 'row',
         padding: 10,
-        justifyContent: 'space-between', 
+        justifyContent: 'space-between',
         borderBottomWidth: 1,
-     },
-     flatListText: {
-        color: '#000000', 
+    },
+    flatListText: {
+        color: '#000000',
         fontFamily: 'OpenSans-Bold',
-     },
-     flatListRightArrow: {
-        marginTop: -2, 
-        opacity: 0.6, 
+    },
+    flatListRightArrow: {
+        marginTop: -2,
+        opacity: 0.6,
         marginRight: 5
-     },
+    },
+    /*---------- item -------*/
+
+    square: {
+        width: 8,
+        height: 8,
+        backgroundColor: themeColor,
+        borderRadius: 2,
+        marginTop: 7
+    },
+    cardHeaderLine: {
+        flexDirection: 'row',
+        gap: 5
+    },
+
+    /*---------- item details -------*/
+
+    itemDetailsHeader: {
+        flex: 1,
+        flexDirection: 'column',
+        justifyContent: 'space-between',
+        backgroundColor: '#FFFFFF'
+    },
+    itemHeadertop: {
+        flexDirection: 'row',
+        flex: 1,
+        justifyContent: 'space-between'
+    },
+    itemHeaderRight: {
+        marginTop: 4,
+    },
+    itemMiddleOverAll: {
+        flex: 1,
+        flexDirection: 'column',
+        justifyContent: 'space-between',
+        padding: 40,
+    },
+    itemDetailsCategoryName: {
+        fontFamily: 'OpenSans-SemiBold',
+        fontSize: 26,
+        alignSelf: 'center',
+        color: 'black'
+    },
+    itemDetailsPayment: {
+        fontSize: 18,
+        alignSelf: 'center'
+    },
+    itemMiddleHeader: {
+        gap: 12,
+    },
+    itemDeatilsView: {
+        flexDirection: 'row'
+    },
+    itemDeatilsModeView: {
+        backgroundColor: 'white',
+        alignSelf: 'center',
+        borderColor: '#EFEFEF',
+        borderWidth: 1,
+        borderRadius: 6,
+        marginVertical: 6,
+    },
+    itemDeatilsModeText: {
+        margin: 3,
+    },
+    itemDeatilsAddress: {
+        fontSize: 16,
+        color: '#000000',
+        fontFamily: 'OpenSans-SemiBold',
+    },
+    itemDetailsDescriptionLabel: {
+        fontSize: 26,
+    },
+    itemDetailsDescription: {
+        fontSize: 16,
+        paddingVertical: 16,
+        width: 316
+    },
+    itemDetailsAddressText: {
+        width: 240
+    },
+    itemDeatilsAssignerText: {
+        fontSize: 16,
+        color: '#000000',
+        fontFamily: 'OpenSans-SemiBold'
+    },
+    itemDeatilsAssignerName: {
+        paddingVertical: 3,
+    },
+    itemDeatilsBtn: {
+        alignItems: 'center',
+    },
+
+    /*---------- image full screen -------*/
+
+    imageOverallView: {
+        width: '100%',
+        height: '100%',
+        backgroundColor: '#FFFFFF'
+    },
+    imageBackImageView: {
+        paddingLeft: 10,
+        paddingTop: 20,
+    },
+    imageFullView: {
+        alignSelf: 'center',
+    },
+    imageFullViewStyle: {
+        width: 393,
+        height: 710,
+        resizeMode: 'contain',
+    },
+    itemDetailsDummyImageStyle: {
+        width: 240,
+        height: 200,
+        alignItems: 'center',
+        justifyContent: 'center',
+    },
+    itemDetailsImageStyle: {
+        width: 240,
+        height: 200,
+        borderRadius: 20,
+    },
 
 });
 

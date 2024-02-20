@@ -1,22 +1,32 @@
 import React, { useEffect, useState, useMemo } from "react";
-import { View, Text, Pressable, Image, ActivityIndicator } from "react-native";
-import { addAssignerJobs, getUserImage, getjobDetails, } from "../../../Util/NetworkUtils";
+import { View, Text, Pressable, Alert, } from "react-native";
+import { addAssignerJobs, getUserImage, getjobDetails, jobDelete } from "../../../Util/NetworkUtils";
 import Button from "../button";
 import styles, { themeColor } from "../../../Themes/styles";
 import Back from "../../../../assets/svg/back.svg";
+import ThreeDot from '../../../../assets/svg/dots-three-vertical.svg';
+import I18n from "../../../I18N/i18n";
+import ImageFullScreen from "./imageFullScreen";
+import Loader from "../../loader";
 
 const ItemDetails = ({ route, navigation }) => {
-    const { payment, mode, category, address, jobTime, id, status, getAllJobsApi, jobDescription, assigner, imageId, streetAddress, pinCode, state, country } = route.params;
-    const color = mode === 'immediate' ? themeColor : 'black';
+    const { mode, id, imageId } = route.params;
+    const color = mode === 'immediate' ? themeColor : '#000000';
     const [imageData, setImageData] = useState(null);
     const [data, setData] = useState([]);
     const [loading, setLoading] = useState(false);
-    const [fullImageVisible, setFullImageVisible] = useState(false);
+    const [loader, setLoader] = useState(false);
 
     const categoryName = data.category ? data.category.name : '';
+    const assignerName = data.assigner ? data.assigner.name : '';
+    const streetAddress = data.address ? data.address.streetAddress : '';
+    const city = data.address ? data.address.city : '';
+    const pinCode = data.address ? data.address.pinCode : '';
+    const state = data.address ? data.address.state : '';
+    const country = data.address ? data.address.country : '';
 
     const formattedDateTime = useMemo(() => {
-        const inputDateString = jobTime;
+        const inputDateString = data.jobTime;
         const date = new Date(inputDateString);
 
         if (!isNaN(date)) {
@@ -27,10 +37,9 @@ const ItemDetails = ({ route, navigation }) => {
 
             return `${day} ${month} '${year} ${time}`;
         } else {
-            console.log("Invalid Date");
             return null;
         }
-    }, [jobTime]);
+    }, [data.jobTime]);
 
     useEffect(() => {
         getjobIdDetails();
@@ -41,12 +50,18 @@ const ItemDetails = ({ route, navigation }) => {
                 getImage();
             }
         }, 2000);
-
     }, []);
+
+    const handleGoBack = () => {
+        navigation.goBack();
+        if (route.params?.onNavigateBack) {
+            route.params.onNavigateBack();
+        }
+    };
 
     const values = {
         "imageId": imageId
-    };  
+    };
 
     async function getImage() {
         try {
@@ -77,71 +92,113 @@ const ItemDetails = ({ route, navigation }) => {
         } catch (error) {
             console.log(error);
         }
+    };
+    const assignJob = () => {
+        Alert.alert('', I18n.t('alert.pick_job'), [
+            {
+                text: I18n.t('alert.cancel'),
+                onPress: () => console.log('Cancel Pressed'),
+                style: 'cancel',
+            },
+            {
+                text: I18n.t('alert.ok'),
+                onPress: () => {
+                    setLoader(true),
+                        addAssigner()
+                }
+            },
+        ]);
     }
     async function addAssigner() {
         try {
             const newJobs = await addAssignerJobs(params);
-            if (newJobs.success) {
-                setRefresh(true);
-                console.log('job updated success');
-            } else {
-                console.log("error ", " no pick the job");
-            }
+            setData(newJobs);
+            getjobIdDetails();
+            setLoader(true);
+            setTimeout(() => {
+                setLoader(false);
+            }, 1000)
         }
         catch (error) {
-            console.log(error);
+            setLoader(false);
+            alert(I18n.t('alert.assigner'));
+        }
+    };
+
+    const deleteTheJob = () => {
+        Alert.alert('', I18n.t('alert.delete_job'), [
+            {
+                text: I18n.t('alert.cancel'),
+                onPress: () => console.log('Cancel Pressed'),
+                style: 'cancel',
+            },
+            {
+                text: I18n.t('alert.ok'),
+                onPress: () => {
+                    deleteJob()
+                }
+            },
+        ]);
+    }
+
+    async function deleteJob() {
+        try {
+            const job = await jobDelete(params);
+            navigation.goBack();
+        }
+        catch (error) {
+            alert(I18n.t('alert.no_delete'))
         }
     };
 
     return (
-        <View style={{ flex: 1, flexDirection: 'column', justifyContent: 'space-between', backgroundColor: '#FFFFFF' }}>
+        <View style={styles.itemDetailsHeader}>
+            <Loader loading={loader} />
             <View style={styles.header}>
                 <View style={styles.backSvg}>
-                    <Back onPress={() => {navigation.navigate('All Jobs')}} />
+                    <Back onPress={handleGoBack} />
                 </View>
-                <View>
-                    <Text style={styles.headername}>Job Details</Text>
+                <View style={styles.itemHeadertop}>
+                    <Text style={styles.headername}></Text>
+                    <View style={styles.itemHeaderRight}>
+                        {data.status === 'open' && <ThreeDot width={30} height={30} onPress={deleteTheJob} />}
+                    </View>
                 </View>
             </View>
-            <View style={{ flex: 1, flexDirection: 'column', justifyContent: 'space-between', padding: 40 }}>
-                <View style={{ gap: 12 }}>
-                    <Pressable onPress={() => setFullImageVisible(true)} style={{ alignSelf: 'center' }}>
-                        {loading ? (
-                            <View style={{ width: 240, height: 200, alignItems: 'center', justifyContent: 'center' }}>
-                                <ActivityIndicator size="large" color={themeColor} />
-                            </View>
-                        ) : (imageData ? <Image source={{ uri: `${imageData}` }} style={{ width: 240, height: 200, borderRadius: 20, resizeMode: fullImageVisible ? 'cover' : 'center' }} /> : <Image source={require('/home/test/Home/web/workspace/Jobs/UserAuthentication/Images/no-image.jpg')} style={{ width: 240, height: 200, borderRadius: 20 }} />)}
-                    </Pressable>
-                    <Text style={{ fontFamily: 'OpenSans-SemiBold', fontSize: 26, alignSelf: 'center', color: 'black' }}>{categoryName.charAt(0).toUpperCase() + categoryName.slice(1)}</Text>
-                    <Text style={{ fontSize: 18, alignSelf: 'center' }}>₹{data.payment}</Text>
+
+            <View style={styles.itemMiddleOverAll}>
+                <View style={styles.itemMiddleHeader}>
+                    <ImageFullScreen imageData={imageData} loading={loading} imageStyle={styles.itemDetailsImageStyle}/>
+                    <Text style={styles.itemDetailsCategoryName}>{categoryName.charAt(0).toUpperCase() + categoryName.slice(1)}</Text>
+                    <Text style={styles.itemDetailsPayment}>₹{data.payment}</Text>
                     <View>
-                        <View style={{ flexDirection: 'row' }}>
-                            <Text style={{ fontFamily: 'OpenSans-SemiBold', fontSize: 26, color: 'black' }}>Job description: </Text>
-                            <View style={{ backgroundColor: 'white', alignSelf: 'center', borderColor: '#EFEFEF', borderWidth: 1, borderRadius: 6, marginVertical: 6 }}>
-                                <Text style={{ color: color, margin: 3 }}>{data.mode}</Text>
+                        <View style={styles.itemDeatilsView}>
+                            <Text style={[styles.itemDeatilsAddress, styles.itemDetailsDescriptionLabel]}>{I18n.t('jobDetails.job_description')}: </Text>
+                            <View style={styles.itemDeatilsModeView}>
+                                <Text style={{ color: color, ...styles.itemDeatilsModeText }}>{data.mode}</Text>
                             </View>
                         </View>
-                        <Text style={{ fontSize: 16, paddingVertical: 16, width: 316 }}>{jobDescription.charAt(0).toUpperCase() + jobDescription.slice(1)}</Text>
+                        <Text style={styles.itemDetailsDescription}>{data.jobDescription}</Text>
                     </View>
-                    <View style={{ flexDirection: 'row' }}>
-                        <Text style={{ fontSize: 16, color: '#000000', fontFamily: 'OpenSans-SemiBold' }}>Address : </Text>
-                        <Text style={{ paddingVertical: 3, width: 240 }}>{`${address.streetAddress}, ${address.city}, ${address.state}, ${address.country}, ${address.pinCode}`}</Text>
+                    <View style={styles.itemDeatilsView}>
+                        <Text style={styles.itemDeatilsAddress}>{I18n.t('jobDetails.address')} : </Text>
+                        <Text style={[styles.itemDeatilsAssignerName, styles.itemDetailsAddressText]}>{`${streetAddress} , ${city} , ${state} , ${country} - ${pinCode}`}</Text>
                     </View>
-                    <View style={{ flexDirection: 'row' }}>
-                        <Text style={{ fontSize: 16, color: '#000000', fontFamily: 'OpenSans-SemiBold' }}>JobTime : </Text>
-                        <Text style={{ paddingVertical: 3 }}>{formattedDateTime}</Text>
+                    <View style={styles.itemDeatilsView}>
+                        <Text style={styles.itemDeatilsAddress}>{I18n.t('jobDetails.job_time')} : </Text>
+                        <Text style={styles.itemDeatilsAssignerName}>{formattedDateTime}</Text>
                     </View >
-                    {status != 'open' &&
-                        <View style={{ flexDirection: 'row' }}>
-                            <Text style={{ fontSize: 16, color: '#000000', fontFamily: 'OpenSans-SemiBold' }}>assigner : </Text>
-                            <Text style={{ paddingVertical: 3 }}>{assigner.name}</Text>
+                    {data.status != 'open' &&
+                        <View style={styles.itemDeatilsView}>
+                            <Text style={styles.itemDeatilsAssignerText}>{I18n.t('jobDetails.assigner')} : </Text>
+                            <Text style={styles.itemDeatilsAssignerName}>{assignerName}</Text>
                         </View>
                     }
                 </View>
                 <View>
-                    {status === "open" && (
-                        <Pressable onPress={addAssigner} style={{ alignItems: 'center', }}>
-                            <Button name='pick job' />
+                    {data.status === "open" && (
+                        <Pressable onPress={assignJob} style={styles.itemDeatilsBtn}>
+                            <Button name={I18n.t('button.pick_job')} />
                         </Pressable>
                     )}
                 </View>

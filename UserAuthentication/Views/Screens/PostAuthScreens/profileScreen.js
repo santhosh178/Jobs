@@ -19,7 +19,7 @@ import Logout from "../../../../assets/svg/logout.svg";
 import Rating from "../../../../assets/svg/star-shape.svg";
 import RightArrow from "../../../../assets/svg/right-arrow.svg";
 import { getCredit } from "../../../Util/NetworkUtils";
-
+import ImageFullScreen from "./imageFullScreen";
 
 const ProfileScreen = ({ navigation }) => {
   const { userSignout } = useContext(AuthContext);
@@ -38,7 +38,6 @@ const ProfileScreen = ({ navigation }) => {
       const res = await DocumentPicker.pick({
         type: [DocumentPicker.types.images],
       });
-      console.log(res);
       const name = res[0]?.name;
       const uri = res[0]?.uri;
       const type = res[0]?.type;
@@ -68,7 +67,6 @@ const ProfileScreen = ({ navigation }) => {
     }
   }
 
-
   const saveImage = async () => {
     try {
       const datas = new FormData();
@@ -83,7 +81,6 @@ const ProfileScreen = ({ navigation }) => {
     } catch (error) {
       setLoading(false);
       console.log(error);
-      // alert("Image alredy uploaded");
       return;
     }
   };
@@ -106,7 +103,7 @@ const ProfileScreen = ({ navigation }) => {
       setLoading(false);
     }
     catch (error) {
-      // console.log(error);
+      console.log(error);
     }
   };
 
@@ -117,8 +114,6 @@ const ProfileScreen = ({ navigation }) => {
       reader.readAsDataURL(blob);
     });
   };
-
-
 
   async function userCredit() {
     try {
@@ -131,7 +126,6 @@ const ProfileScreen = ({ navigation }) => {
       console.log(error);
     }
   }
-
 
   const logout = () => {
     Alert.alert('', I18n.t('alert.exit'), [
@@ -174,8 +168,6 @@ const ProfileScreen = ({ navigation }) => {
         return <Settings />;
       case 'logout':
         return <Logout />;
-      case 'right-arrow':
-        return <RightArrow />;
       default:
         return null;
     }
@@ -198,11 +190,11 @@ const ProfileScreen = ({ navigation }) => {
             {getSvgComponent(item.icon)}
           </Svg>
         </View>
-        <View style={{...styles.flatListView,borderBottomColor: item.borderColor,}}>
+        <View style={{ ...styles.flatListView, borderBottomColor: item.borderColor, }}>
           <Text style={styles.flatListText}>{item.title}</Text>
           <Svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#D9DAE2" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" style={styles.flatListRightArrow} >
             {RightArrowSvgComponent(item.icons)}
-          </Svg>         
+          </Svg>
         </View>
       </Pressable>
     </View>
@@ -226,11 +218,11 @@ const ProfileScreen = ({ navigation }) => {
           <View style={styles.profileScreenImage}>
             {imageData ? (
               <View>
-                <Image source={{ uri: `${imageData}` }} style={styles.selectImage} />
+                <ImageFullScreen imageData={imageData} loading={loading} imageStyle={styles.selectImage} />
                 <Pressable style={styles.selectImageButton} onPress={openGallery}>
                   <Edit width={40} height={40} />
                 </Pressable>
-              </View>
+              </View> 
             ) : (
               <View>
                 <Image style={styles.selectImage} source={require('/home/test/Home/web/workspace/Jobs/UserAuthentication/Images/profile.jpg')} />
@@ -243,7 +235,7 @@ const ProfileScreen = ({ navigation }) => {
 
           <View style={styles.profileUser}>
             <Text style={styles.profileUserDetails}>{data.name}</Text>
-            <Text style={[styles.profileUserDetails,styles.profileUser]}>{data.email}</Text>
+            <Text style={[styles.profileUserDetails, styles.profileUser]}>{data.email}</Text>
             <Text style={styles.profileUserDetails}>{data.phoneNumber}</Text>
           </View>
 
