@@ -11,7 +11,7 @@ import { getImageData } from "../../../Util/NetworkUtils";
 import { useFocusEffect } from "@react-navigation/native";
 
 const HomeScreen = ({ navigation, route }) => {
-  const { itemDetailsScreen } = route.params;
+  // const { itemDetailsScreen } = route.params;
   const [loading, setLoading] = useState(false);
   const { userSignout } = useContext(AuthContext);
   const [data, setData] = useState([]);
@@ -27,7 +27,7 @@ const HomeScreen = ({ navigation, route }) => {
   const [modifiedTimes, setModifiedTimes] = useState('');
   const [count, SetCount] = useState(1);
   const [newHasMoreData, setNewHasMoreData] = useState(false);
-  const [itemDetailsScreenOpen, setItemDetailsScreenOpen] = useState(itemDetailsScreen);
+  const [itemDetailsScreenOpen, setItemDetailsScreenOpen] = useState(false);
   const [newCount, setNewCount] = useState(0);
   const [newModifiedData, setNewModifiedData] = useState([]);
 
@@ -50,9 +50,9 @@ const HomeScreen = ({ navigation, route }) => {
     React.useCallback(() => {
       if (itemDetailsScreenOpen) {
         onRefresh();
-        setItemDetailsScreenOpen(itemDetailsScreen);
+        setItemDetailsScreenOpen(itemDetailsScreenOpen);
       }
-    }, [itemDetailsScreen])
+    }, [itemDetailsScreenOpen])
   );
 
   useEffect(() => {
@@ -62,8 +62,6 @@ const HomeScreen = ({ navigation, route }) => {
   async function onPress() {
     try {
       setLoading(true);
-      // setData(await getCurrentUser());
-      // console.log(data);
       const userData = await getCurrentUser();
       setImage(userData);
 
@@ -73,7 +71,7 @@ const HomeScreen = ({ navigation, route }) => {
       setLoading(false);
     }
     catch (error) {
-      // console.log(error);
+      console.log(error);
     }
   };
 

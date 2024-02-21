@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useEffect, useState, } from "react";
 import { ScrollView, View, Text, Pressable, Alert, Image, FlatList } from "react-native";
 import I18n from "../../../I18N/i18n";
 import AuthContext from "../../../Context/AuthContext/authContext";
@@ -8,7 +8,6 @@ import Back from "../../../../assets/svg/back.svg";
 import { getImageData } from "../../../Util/NetworkUtils";
 import Plus from "../../../../assets/svg/plus.svg";
 import DocumentPicker from 'react-native-document-picker';
-import { addImageUser } from "../../../Util/NetworkUtils";
 import Edit from "../../../../assets/svg/edit.svg";
 import { Svg } from "react-native-svg";
 import Language from "../../../../assets/svg/language.svg";
@@ -20,6 +19,9 @@ import Rating from "../../../../assets/svg/star-shape.svg";
 import RightArrow from "../../../../assets/svg/right-arrow.svg";
 import { getCredit } from "../../../Util/NetworkUtils";
 import ImageFullScreen from "./imageFullScreen";
+import Loader from "../../loader";
+import { addImageUser } from "../../../Util/NetworkUtils";
+
 
 const ProfileScreen = ({ navigation }) => {
   const { userSignout } = useContext(AuthContext);
@@ -27,11 +29,8 @@ const ProfileScreen = ({ navigation }) => {
   const [data, setData] = useState([]);
   const [imageData, setImageData] = useState(null);
   const [credit, setCredit] = useState('');
+  const [newData, setNewData] = useState([]);
 
-
-  const [imageName, setImageName] = useState('');
-  const [imageType, setImageType] = useState('');
-  const [imageUri, setImageUri] = useState('');
 
   async function openGallery() {
     try {
@@ -42,14 +41,10 @@ const ProfileScreen = ({ navigation }) => {
       const uri = res[0]?.uri;
       const type = res[0]?.type;
 
-      setImageName(name);
-      setImageType(type);
-      setImageUri(uri);
-      saveImage();
 
       const sizeInBytes = res[0]?.size;
       const sizeInKilobytes = sizeInBytes / 1024;
-      if (sizeInKilobytes > 50) {
+      if (sizeInKilobytes > 800) {
         Alert.alert(
           I18n.t('alert.Alert'),
           I18n.t('alert.image_size'),
@@ -57,7 +52,27 @@ const ProfileScreen = ({ navigation }) => {
         );
         return;
       }
+      try {
+        const datas = uri && name && type ? new FormData() : null;
+
+        if (datas) {
+          datas.append('file', {
+            uri: uri,
+            name: name,
+            type: type,
+          });
+        }
+        setLoading(true);
+        const data = await addImageUser(datas);
+        setNewData(data);
+        setLoading(false);
+      } catch (error) {
+        setLoading(false);
+        console.log(error);
+        return;
+      }
     }
+
     catch (err) {
       if (DocumentPicker.isCancel(err)) {
         console.log('User cancelled the picker');
@@ -67,29 +82,12 @@ const ProfileScreen = ({ navigation }) => {
     }
   }
 
-  const saveImage = async () => {
-    try {
-      const datas = new FormData();
-      datas.append('file', {
-        uri: imageUri,
-        name: imageName,
-        type: imageType,
-      });
-      setLoading(true);
-      const data = await addImageUser(datas);
-
-    } catch (error) {
-      setLoading(false);
-      console.log(error);
-      return;
-    }
-  };
-
 
   useEffect(() => {
     onPress();
     userCredit();
-  }, [])
+  }, [newData])
+
 
   async function onPress() {
     try {
@@ -107,6 +105,7 @@ const ProfileScreen = ({ navigation }) => {
     }
   };
 
+
   function blobToBase64(blob) {
     return new Promise((resolve, _) => {
       const reader = new FileReader();
@@ -123,9 +122,11 @@ const ProfileScreen = ({ navigation }) => {
       setLoading(false);
     }
     catch (error) {
+      setLoading(false);
       console.log(error);
     }
   }
+
 
   const logout = () => {
     Alert.alert('', I18n.t('alert.exit'), [
@@ -186,7 +187,7 @@ const ProfileScreen = ({ navigation }) => {
     <View style={styles.profileFlatListOverall}>
       <Pressable style={styles.flatList} onPress={() => handleItemPress(item.id)} >
         <View style={styles.flatListLeftSideImage}>
-          <Svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="black" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" >
+          <Svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="black" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
             {getSvgComponent(item.icon)}
           </Svg>
         </View>
@@ -201,76 +202,78 @@ const ProfileScreen = ({ navigation }) => {
   );
 
 
-
   return (
-    <ScrollView>
-      <View>
-        <View style={styles.header}>
-          <View style={styles.backSvg}>
-            <Back onPress={() => { navigation.navigate(I18n.t('home.screen_header_name')) }} />
-          </View>
-          <View>
-            <Text style={styles.headername}>{I18n.t('profile.header_name')}</Text>
-          </View>
-        </View>
-
-        <View style={styles.profileOverall}>
-          <View style={styles.profileScreenImage}>
-            {imageData ? (
-              <View>
-                <ImageFullScreen imageData={imageData} loading={loading} imageStyle={styles.selectImage} />
-                <Pressable style={styles.selectImageButton} onPress={openGallery}>
-                  <Edit width={40} height={40} />
-                </Pressable>
-              </View> 
-            ) : (
-              <View>
-                <Image style={styles.selectImage} source={require('/home/test/Home/web/workspace/Jobs/UserAuthentication/Images/profile.jpg')} />
-                <Pressable style={styles.selectImageButton} onPress={openGallery}>
-                  <Plus width={40} height={40} />
-                </Pressable>
-              </View>
-            )}
-          </View>
-
-          <View style={styles.profileUser}>
-            <Text style={styles.profileUserDetails}>{data.name}</Text>
-            <Text style={[styles.profileUserDetails, styles.profileUser]}>{data.email}</Text>
-            <Text style={styles.profileUserDetails}>{data.phoneNumber}</Text>
-          </View>
-
-
-          <View style={styles.ratingCreditOverall}>
-            <View style={styles.ratingCredit}>
-              <View style={styles.ratingCreditImage}>
-                <Rating width={22} height={22} />
-                <Text style={styles.radingCreditText}>{I18n.t('profile.rating')}</Text>
-              </View>
-              <View>
-                <Text style={styles.rating}>4.5/5</Text>
-              </View>
+    <View>
+      <Loader loading={loading} />
+      <ScrollView>
+        <View>
+          <View style={styles.header}>
+            <View style={styles.backSvg}>
+              <Back onPress={() => { navigation.navigate(I18n.t('home.screen_header_name')) }} />
             </View>
-            <View style={styles.ratingCredit}>
-              <View style={styles.ratingCreditImage}>
-                <Text style={styles.creditImage}>₹</Text>
-                <Text style={styles.radingCreditText}>{I18n.t('profile.credit')}</Text>
-              </View>
-              <View>
-                <Text style={styles.creditText}>{credit.credit}</Text>
-              </View>
+            <View>
+              <Text style={styles.headername}>{I18n.t('profile.header_name')}</Text>
             </View>
           </View>
-          <View>
-            <FlatList
-              data={menuItems}
-              renderItem={renderItem}
-              keyExtractor={(item) => item.id}
-              scrollEnabled={false}
-            />
+
+          <View style={styles.profileOverall}>
+            <View style={styles.profileScreenImage}>
+              {imageData ? (
+                <View>
+                  <ImageFullScreen imageData={imageData} loading={loading} imageStyle={styles.selectImage} />
+                  <Pressable style={styles.selectImageButton} onPress={openGallery}>
+                    <Edit width={40} height={40} />
+                  </Pressable>
+                </View>
+              ) : (
+                <View>
+                  <Image style={styles.selectImage} source={require('/home/test/Home/web/workspace/Jobs/UserAuthentication/Images/profile.jpg')} />
+                  <Pressable style={styles.selectImageButton} onPress={openGallery}>
+                    <Plus width={40} height={40} />
+                  </Pressable>
+                </View>
+              )}
+            </View>
+
+            <View style={styles.profileUser}>
+              <Text style={styles.profileUserDetails}>{data.name}</Text>
+              <Text style={[styles.profileUserDetails, styles.profileUser]}>{data.email}</Text>
+              <Text style={styles.profileUserDetails}>{data.phoneNumber}</Text>
+            </View>
+
+
+            <View style={styles.ratingCreditOverall}>
+              <View style={styles.ratingCredit}>
+                <View style={styles.ratingCreditImage}>
+                  <Rating width={22} height={22} />
+                  <Text style={styles.radingCreditText}>{I18n.t('profile.rating')}</Text>
+                </View>
+                <View>
+                  <Text style={styles.rating}>4.5/5</Text>
+                </View>
+              </View>
+              <View style={styles.ratingCredit}>
+                <View style={styles.ratingCreditImage}>
+                  <Text style={styles.creditImage}>₹</Text>
+                  <Text style={styles.radingCreditText}>{I18n.t('profile.credit')}</Text>
+                </View>
+                <View>
+                  <Text style={styles.creditText}>{credit.credit}</Text>
+                </View>
+              </View>
+            </View>
+            <View>
+              <FlatList
+                data={menuItems}
+                renderItem={renderItem}
+                keyExtractor={(item) => item.id}
+                scrollEnabled={false}
+              />
+            </View>
           </View>
         </View>
-      </View>
-    </ScrollView>
+      </ScrollView>
+    </View>
   )
 };
 

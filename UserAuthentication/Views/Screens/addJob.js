@@ -13,11 +13,11 @@ import Address from "./address";
 import { getCategory } from "../../Util/NetworkUtils";
 import Back from "../../../assets/svg/back.svg";
 import Plus from "../../../assets/svg/plus.svg";
-import DocumentPicker, { types } from 'react-native-document-picker';
+import DocumentPicker from 'react-native-document-picker';
 import Cancel from "../../../assets/svg/cancel.svg";
 
 
-const AddJob = ({initialParams,updateItemDetailsScreenOpen}) => {
+const AddJob = ({ initialParams, updateItemDetailsScreenOpen }) => {
     const [modalVisible, setModalVisible] = useState(false);
     const [loading, setLoading] = useState(false);
     const [jobDescription, setJobDescription] = useState('');
@@ -42,7 +42,7 @@ const AddJob = ({initialParams,updateItemDetailsScreenOpen}) => {
     const [pressCount, setPressCount] = useState(0);
     const [timePressCount, setTimePressCount] = useState(0);
 
-    const [imageName, setImageName] = useState('');
+    const [imageName, setImageName] = useState(null);
     const [imageType, setImageType] = useState('');
     const [imageUri, setImageUri] = useState('');
 
@@ -80,7 +80,7 @@ const AddJob = ({initialParams,updateItemDetailsScreenOpen}) => {
         }
     }
 
-  const [itemDetailsScreenOpen, setItemDetailsScreenOpen] = useState(initialParams);
+    const [itemDetailsScreenOpen, setItemDetailsScreenOpen] = useState(initialParams);
 
     /*------- Focus ---------*/
     const [focusedInput, setFocusedInput] = useState(null);
@@ -286,12 +286,14 @@ const AddJob = ({initialParams,updateItemDetailsScreenOpen}) => {
             jobTime: (`${formattedDate} ${formattedTime}`),
         };
         try {
-            const datas = new FormData();
-            datas.append('file', {
-                uri: imageUri,
-                name: imageName,
-                type: imageType,
-            });
+            const datas = imageUri && imageName && imageType ? new FormData() : null;
+            if (datas) {
+                datas.append('file', {
+                    uri: imageUri,
+                    name: imageName,
+                    type: imageType,
+                });
+            }
             setLoading(true);
             const data = await addJobs(values, datas);
             updateItemDetailsScreenOpen(true);
@@ -305,6 +307,8 @@ const AddJob = ({initialParams,updateItemDetailsScreenOpen}) => {
             setTimeSelected('');
             setSelectedAddress('');
             setImageName('');
+            setImageType('');
+            setImageUri('');
         }
         catch (error) {
             setLoading(false)

@@ -428,7 +428,8 @@ const styles = StyleSheet.create({
     },
     ratingCreditImage: {
         flexDirection: 'row',
-        gap: 7
+        alignItems: 'center',
+        gap: 7,
     },
     radingCreditText: {
         color: '#000000',
@@ -442,7 +443,7 @@ const styles = StyleSheet.create({
     creditImage: {
         fontSize: 20,
         color: '#000000',
-        textAlign: 'center'
+        textAlign: 'center', 
     },
     creditText: {
         color: '#000000',
@@ -458,12 +459,14 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
     },
     flatListLeftSideImage: {
-        padding: 10,
+        paddingHorizontal: 10
     },
     flatListView: {
         width: 310,
         flexDirection: 'row',
-        padding: 10,
+        alignItems: 'center',
+        paddingHorizontal: 10,
+        paddingBottom: 20,
         justifyContent: 'space-between',
         borderBottomWidth: 1,
     },

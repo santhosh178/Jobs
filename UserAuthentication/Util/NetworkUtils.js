@@ -57,7 +57,7 @@ const imageRequest = async (options) => {
 const addImageRequest = async (options) => {
   const ACCESS_TOKEN = await EncryptedStorage.getItem('user-token');
   const headers = new Headers({
-    'Content-Type': 'multipart/form-data',
+    'Content-Type': 'multipart/form-data;boundary=------WebKitFormBoundary2lZSUsxEA3X5jpYD'
   })
 
   if (ACCESS_TOKEN) {
@@ -160,14 +160,23 @@ export function modifiedTime(queryParams) {
   });
 }
 
+
 export function addJobs(queryParams, datas) {
   const urlWithParams = `${API_BASE_URL}/job/add_job?${getQueryString(queryParams)}`;
-  return addImageRequest({
-    url: urlWithParams,
-    method: 'POST',
-    body: datas,
-  });
-};
+  if (datas) {
+    return addImageRequest({
+      url: urlWithParams,
+      method: 'POST',
+      body: datas,
+    });
+  } else {
+    return request({
+      url: urlWithParams,
+      method: 'POST',
+    });
+  }
+}
+
 
 export function addImageUser(datas) {
   const urlWithParams = `${API_BASE_URL}/user/add_image_user`;
