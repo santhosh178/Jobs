@@ -8,6 +8,7 @@ import ThreeDot from '../../../../assets/svg/dots-three-vertical.svg';
 import I18n from "../../../I18N/i18n";
 import ImageFullScreen from "./imageFullScreen";
 import Loader from "../../loader";
+import { Menu, Divider, Provider, PaperProvider } from 'react-native-paper';
 
 const ItemDetails = ({ route, navigation }) => {
     const { mode, id, imageId } = route.params;
@@ -24,6 +25,12 @@ const ItemDetails = ({ route, navigation }) => {
     const pinCode = data.address ? data.address.pinCode : '';
     const state = data.address ? data.address.state : '';
     const country = data.address ? data.address.country : '';
+
+    const [visible, setVisible] = React.useState(false);
+
+    const openMenu = () => setVisible(true);
+
+    const closeMenu = () => setVisible(false);
 
     const formattedDateTime = useMemo(() => {
         const inputDateString = data.jobTime;
@@ -154,56 +161,71 @@ const ItemDetails = ({ route, navigation }) => {
     return (
         <View style={styles.itemDetailsHeader}>
             <Loader loading={loader} />
-            <View style={styles.header}>
-                <View style={styles.backSvg}>
-                    <Back onPress={handleGoBack} />
-                </View>
-                <View style={styles.itemHeadertop}>
-                    <Text style={styles.headername}></Text>
-                    <View style={styles.itemHeaderRight}>
-                        {data.status === 'open' && <ThreeDot width={30} height={30} onPress={deleteTheJob} />}
+            <View style={{ position: 'absolute' }}>
+                <View style={styles.header}>
+                    <View style={styles.backSvg}>
+                        <Back onPress={handleGoBack} />
+                    </View>
+                    <View style={styles.itemHeadertop}>
+                        <Text style={styles.headername}></Text>
+                        <View style={styles.itemHeaderRight}>
+                            <PaperProvider>
+                                <View>
+                                    <Menu
+                                        visible={visible}
+                                        onDismiss={closeMenu}
+                                        anchor={<ThreeDot width={30} height={30} onPress={openMenu} />}
+                                        style={styles.menuContainer}
+                                    >
+                                        {data.status === 'open' && <Menu.Item onPress={deleteTheJob} title="Delete" />}
+                                        <Menu.Item title="Report" />
+                                        <Menu.Item title="Feed Back" />
+                                    </Menu>
+                                </View>
+                            </PaperProvider>
+                        </View>
                     </View>
                 </View>
-            </View>
 
-            <View style={styles.itemMiddleOverAll}>
-                <View style={styles.itemMiddleHeader}>
-                    <ImageFullScreen imageData={imageData} loading={loading} imageStyle={styles.itemDetailsImageStyle}/>
-                    <Text style={styles.itemDetailsCategoryName}>{categoryName.charAt(0).toUpperCase() + categoryName.slice(1)}</Text>
-                    <Text style={styles.itemDetailsPayment}>₹{data.payment}</Text>
-                    <View>
-                        <View style={styles.itemDeatilsView}>
-                            <Text style={[styles.itemDeatilsAddress, styles.itemDetailsDescriptionLabel]}>{I18n.t('jobDetails.job_description')}: </Text>
-                            <View style={styles.itemDeatilsModeView}>
-                                <Text style={{ color: color, ...styles.itemDeatilsModeText }}>{data.mode}</Text>
+                <View style={styles.itemMiddleOverAll}>
+                    <View style={styles.itemMiddleHeader}>
+                        <ImageFullScreen imageData={imageData} loading={loading} imageStyle={styles.itemDetailsImageStyle} />
+                        <Text style={styles.itemDetailsCategoryName}>{categoryName.charAt(0).toUpperCase() + categoryName.slice(1)}</Text>
+                        <Text style={styles.itemDetailsPayment}>₹{data.payment}</Text>
+                        <View>
+                            <View style={styles.itemDeatilsView}>
+                                <Text style={[styles.itemDeatilsAddress, styles.itemDetailsDescriptionLabel]}>{I18n.t('jobDetails.job_description')}: </Text>
+                                <View style={styles.itemDeatilsModeView}>
+                                    <Text style={{ color: color, ...styles.itemDeatilsModeText }}>{data.mode}</Text>
+                                </View>
                             </View>
+                            <Text style={styles.itemDetailsDescription}>{data.jobDescription}</Text>
                         </View>
-                        <Text style={styles.itemDetailsDescription}>{data.jobDescription}</Text>
-                    </View>
-                    <View style={styles.itemDeatilsView}>
-                        <Text style={styles.itemDeatilsAddress}>{I18n.t('jobDetails.address')} : </Text>
-                        <Text style={[styles.itemDeatilsAssignerName, styles.itemDetailsAddressText]}>{`${streetAddress} , ${city} , ${state} , ${country} - ${pinCode}`}</Text>
-                    </View>
-                    <View style={styles.itemDeatilsView}>
-                        <Text style={styles.itemDeatilsAddress}>{I18n.t('jobDetails.job_time')} : </Text>
-                        <Text style={styles.itemDeatilsAssignerName}>{formattedDateTime}</Text>
-                    </View >
-                    {data.status != 'open' &&
                         <View style={styles.itemDeatilsView}>
-                            <Text style={styles.itemDeatilsAssignerText}>{I18n.t('jobDetails.assigner')} : </Text>
-                            <Text style={styles.itemDeatilsAssignerName}>{assignerName}</Text>
+                            <Text style={styles.itemDeatilsAddress}>{I18n.t('jobDetails.address')} : </Text>
+                            <Text style={[styles.itemDeatilsAssignerName, styles.itemDetailsAddressText]}>{`${streetAddress} , ${city} , ${state} , ${country} - ${pinCode}`}</Text>
                         </View>
-                    }
-                </View>
-                <View>
-                    {data.status === "open" && (
-                        <Pressable onPress={assignJob} style={styles.itemDeatilsBtn}>
-                            <Button name={I18n.t('button.pick_job')} />
-                        </Pressable>
-                    )}
+                        <View style={styles.itemDeatilsView}>
+                            <Text style={styles.itemDeatilsAddress}>{I18n.t('jobDetails.job_time')} : </Text>
+                            <Text style={styles.itemDeatilsAssignerName}>{formattedDateTime}</Text>
+                        </View >
+                        {data.status != 'open' &&
+                            <View style={styles.itemDeatilsView}>
+                                <Text style={styles.itemDeatilsAssignerText}>{I18n.t('jobDetails.assigner')} : </Text>
+                                <Text style={styles.itemDeatilsAssignerName}>{assignerName}</Text>
+                            </View>
+                        }
+                    </View>
+                    <View style={{ top: 80 }}>
+                        {data.status === "open" && (
+                            <Pressable onPress={assignJob} style={styles.itemDeatilsBtn}>
+                                <Button name={I18n.t('button.pick_job')} />
+                            </Pressable>
+                        )}
+                    </View>
                 </View>
             </View>
-        </View>
+        </View >
     )
 };
 

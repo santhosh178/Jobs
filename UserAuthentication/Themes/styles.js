@@ -190,6 +190,7 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         gap: 10,
         padding: 10,
+        zIndex: 2,
     },
     backSvg: {
         width: 20,
@@ -200,6 +201,7 @@ const styles = StyleSheet.create({
         fontSize: 25,
         color: 'black',
         fontFamily: 'OpenSans-Bold',
+        zIndex: 1,
     },
     addJobOverall: {
         padding: 10,
@@ -496,10 +498,8 @@ const styles = StyleSheet.create({
     /*---------- item details -------*/
 
     itemDetailsHeader: {
-        flex: 1,
-        flexDirection: 'column',
-        justifyContent: 'space-between',
-        backgroundColor: '#FFFFFF'
+        backgroundColor: '#FFFFFF',
+        position: 'relative'
     },
     itemHeadertop: {
         flexDirection: 'row',
@@ -509,11 +509,13 @@ const styles = StyleSheet.create({
     itemHeaderRight: {
         marginTop: 4,
     },
+    menuContainer: {
+        left: -100,
+        top: 34,
+    },
     itemMiddleOverAll: {
-        flex: 1,
-        flexDirection: 'column',
-        justifyContent: 'space-between',
         padding: 40,
+        zIndex: 1,
     },
     itemDetailsCategoryName: {
         fontFamily: 'OpenSans-SemiBold',
@@ -523,7 +525,7 @@ const styles = StyleSheet.create({
     },
     itemDetailsPayment: {
         fontSize: 18,
-        alignSelf: 'center'
+        alignSelf: 'center',
     },
     itemMiddleHeader: {
         gap: 12,
@@ -553,7 +555,7 @@ const styles = StyleSheet.create({
     itemDetailsDescription: {
         fontSize: 16,
         paddingVertical: 16,
-        width: 316
+        width: 316,
     },
     itemDetailsAddressText: {
         width: 240
@@ -599,6 +601,7 @@ const styles = StyleSheet.create({
         width: 240,
         height: 200,
         borderRadius: 20,
+        zIndex: 0,
     },
 
 });

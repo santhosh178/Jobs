@@ -44,7 +44,7 @@ const Item = memo(({ item, navigation, onNavigateToItemDetails }) => {
                     </View>
                 </View>
                 <View style={styles.cardBottom}>
-                    <Text style={{ width: 100 }}>{item.assigner ? `${I18n.t('home.assigned')} : ${assingerName}` : I18n.t('home.unassigned')}</Text>
+                    <Text style={{ width: item.assigner ? 'auto' : 100 }}>{item.assigner ? `${I18n.t('home.assigned')} : ${assingerName}` : I18n.t('home.unassigned')}</Text>
                     <Text style={styles.payment}>₹{item.payment}</Text>
 
                 </View>

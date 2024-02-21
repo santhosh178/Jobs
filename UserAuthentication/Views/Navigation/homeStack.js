@@ -35,11 +35,6 @@ const getTabBarIcon = (routeName, focused) => {
 
 const HomeStack = ({ route }) => {
     const routeName = getFocusedRouteNameFromRoute(route) ?? 'All Jobs';
-    const [itemDetailsScreen, setItemDetailsScreen] = useState(false);
-
-    const updateItemDetailsScreenOpen = (value) => {
-        setItemDetailsScreen(value);
-    };
 
     return (
         <Tab.Navigator
@@ -59,17 +54,15 @@ const HomeStack = ({ route }) => {
                     tabBarLabelStyle: { color: routeName === I18n.t('home.screen_header_name') ? themeColor : '#000000' },
                     headerShown: false,
                 }}
-                initialParams={{ itemDetailsScreen }}
             />
             <Tab.Screen
                 name="Add Job"
                 component={AddJob}
                 options={{
-                    tabBarIcon: () => ( <AddJob initialParams={ itemDetailsScreen } updateItemDetailsScreenOpen={updateItemDetailsScreenOpen}/>),
+                    tabBarIcon: () => ( <AddJob />),
                     tabBarLabel: () => null,
                     headerShown: false,
-                }}
-                
+                }} 
             />
             <Tab.Screen
                 name="My Jobs"
@@ -79,7 +72,6 @@ const HomeStack = ({ route }) => {
                     tabBarLabelStyle: { color: routeName === 'My Jobs' ? themeColor : '#000000' },
                     headerShown: false,
                 }}
-                initialParams={{ itemDetailsScreen }}
             />
         </Tab.Navigator>
     )

@@ -1,17 +1,14 @@
 import React, { useState, useEffect, useContext } from "react";
 import { Text, View, FlatList, ActivityIndicator, RefreshControl, Pressable, Image } from "react-native";
-import { getJobs, modifiedTime } from "../../../Util/NetworkUtils";
+import { getJobs, modifiedTime, getImageData, getCurrentUser } from "../../../Util/NetworkUtils";
 import styles, { themeColor } from "../../../Themes/styles";
 import AuthContext from "../../../Context/AuthContext/authContext";
 import I18n from "../../../I18N/i18n";
-import { getCurrentUser } from "../../../Util/NetworkUtils";
 import Item from "./item";
-import { getImageData } from "../../../Util/NetworkUtils";
 
 import { useFocusEffect } from "@react-navigation/native";
 
-const HomeScreen = ({ navigation, route }) => {
-  // const { itemDetailsScreen } = route.params;
+const HomeScreen = ({ navigation }) => {
   const [loading, setLoading] = useState(false);
   const { userSignout } = useContext(AuthContext);
   const [data, setData] = useState([]);
@@ -52,7 +49,9 @@ const HomeScreen = ({ navigation, route }) => {
         onRefresh();
         setItemDetailsScreenOpen(itemDetailsScreenOpen);
       }
-    }, [itemDetailsScreenOpen])
+    },
+      [itemDetailsScreenOpen]
+    )
   );
 
   useEffect(() => {
@@ -62,7 +61,7 @@ const HomeScreen = ({ navigation, route }) => {
   async function onPress() {
     try {
       setLoading(true);
-      const userData = await getCurrentUser();
+      const userData = await getCurrentUser(userSignout);
       setImage(userData);
 
       const imageData = await getImageData(userData.image_id);
@@ -83,7 +82,7 @@ const HomeScreen = ({ navigation, route }) => {
     });
   };
 
- 
+
   const params = {
     limit: limit,
   };
@@ -103,21 +102,19 @@ const HomeScreen = ({ navigation, route }) => {
       if (newDatas.length > 0) {
         setNewCount(0);
         const lastTimess = newDatas[newDatas.length - 1].modifiedTime;
+        console.log("last times", lastTimess.slice(0, 19).replace('T', ' '));
         setModifiedTimes(lastTimess.slice(0, 19).replace('T', ' '));
         setData((prevData) => [...prevData, ...newDatas]);
-        setNewModifiedData(newDatas);
+        setNewModifiedData((prevData) => [...prevData, ...newDatas]);
         setNewCount(1);
       }
       else {
         if (newCount === 1) {
           setNewCount(0);
           setData([]);
-          const newArrayWithoutFirstElement = [...newData];
-          newArrayWithoutFirstElement.slice(1);
           setData((prevData) => [...prevData, ...newModifiedData]);
           setData((prevData) => [...prevData, ...newData]);
-
-          const loadData = newArrayWithoutFirstElement[newArrayWithoutFirstElement.length - 1];
+          const loadData = newData[newData.length - 1];
           if (loadData) {
             setLastTime(loadData.modifiedTime.slice(0, 19).replace('T', ' '));
           }
@@ -229,15 +226,6 @@ const HomeScreen = ({ navigation, route }) => {
               ) : null
             )
         }
-      // ListEmptyComponent={() =>
-      //   data.length === 0 ? (
-      //     <View style={{ height: 640, alignSelf: 'center', justifyContent: 'center' }}>
-      //       <Text>
-      //         {I18n.t('home.list_no_data')}
-      //       </Text>
-      //     </View>
-      //   ) : null
-      // }
       />
     </View>
   )

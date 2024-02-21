@@ -129,6 +129,14 @@ export function getMyJobs(queryParams) {
   });
 };
 
+export function getMyAssignerJobs(queryParams) {
+  const urlWithParams = `${API_BASE_URL}/job/get_assigner_jobs_details?${getQueryString(queryParams)}`;
+  return request({
+    url: urlWithParams,
+    method: 'GET'
+  });
+};
+
 export function addAssignerJobs(queryParams) {
   const urlWithParams = `${API_BASE_URL}/job/update_job_assigner?${getQueryString(queryParams)}`;
   return request({
@@ -158,7 +166,23 @@ export function modifiedTime(queryParams) {
     url: urlWithParams,
     method: 'GET'
   });
-}
+};
+
+export function modifiedTimeByUserId(queryParams) {
+  const urlWithParams = `${API_BASE_URL}/job/last_modified_time_by_userid?${getQueryString(queryParams)}`;
+  return request({
+    url: urlWithParams,
+    method: 'GET'
+  });
+};
+
+export function modifiedTimeByAssignedId(queryParams) {
+  const urlWithParams = `${API_BASE_URL}/job/last_modified_time_by_assigner_id?${getQueryString(queryParams)}`;
+  return request({
+    url: urlWithParams,
+    method: 'GET'
+  });
+};
 
 
 export function addJobs(queryParams, datas) {
@@ -187,7 +211,6 @@ export function addImageUser(datas) {
     body: datas,
   });
 };
-
 
 export function getImageData(imageId) {
   const urlWithParams = `${API_BASE_URL}/images/get_image?imageId=${imageId}`;

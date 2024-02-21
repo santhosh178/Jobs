@@ -17,7 +17,7 @@ import DocumentPicker from 'react-native-document-picker';
 import Cancel from "../../../assets/svg/cancel.svg";
 
 
-const AddJob = ({ initialParams, updateItemDetailsScreenOpen }) => {
+const AddJob = ({initialParams}) => {
     const [modalVisible, setModalVisible] = useState(false);
     const [loading, setLoading] = useState(false);
     const [jobDescription, setJobDescription] = useState('');
@@ -45,7 +45,6 @@ const AddJob = ({ initialParams, updateItemDetailsScreenOpen }) => {
     const [imageName, setImageName] = useState(null);
     const [imageType, setImageType] = useState('');
     const [imageUri, setImageUri] = useState('');
-
 
     /*------- image upload ---------*/
     async function openGallery() {
@@ -296,7 +295,6 @@ const AddJob = ({ initialParams, updateItemDetailsScreenOpen }) => {
             }
             setLoading(true);
             const data = await addJobs(values, datas);
-            updateItemDetailsScreenOpen(true);
             setModalVisible(false);
             setLoading(false);
             setMode('');
