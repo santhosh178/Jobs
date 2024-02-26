@@ -305,8 +305,6 @@ const AddJob = ({initialParams}) => {
             setTimeSelected('');
             setSelectedAddress('');
             setImageName('');
-            setImageType('');
-            setImageUri('');
         }
         catch (error) {
             setLoading(false)

@@ -65,7 +65,7 @@ const Address = ({ onSelectAddress, isVisible, onClose, }) => {
 
         {selectedAddress && selectedAddress.id === item.id && (
           <View style={styles.selectAddress}>
-            <Check  width={20} height={20} />
+            <Check width={20} height={20} />
           </View>
         )}
       </Pressable>
@@ -98,16 +98,26 @@ const Address = ({ onSelectAddress, isVisible, onClose, }) => {
                 scrollEnabled={false}
               />
             </View>
-            <View style={styles.addressCardButton}>
-              <Pressable onPress={onClose}>
-                <Button name={I18n.t('button.cancel')} cancel={styles.cancelBtn}/>
-              </Pressable>
-              <AddAddress onAddAddress={onAddAddress} />
-            </View>
+            {data.length === 0 && (
+              <View style={styles.centeredButtons}>
+                <Pressable onPress={onClose}>
+                  <Button name={I18n.t('button.cancel')} cancel={styles.cancelBtn} />
+                </Pressable>
+                <AddAddress onAddAddress={onAddAddress} />
+              </View>
+            )}
+            {data.length > 0 && (
+              <View style={styles.addressCardButton}>
+                <Pressable onPress={onClose}>
+                  <Button name={I18n.t('button.cancel')} cancel={styles.cancelBtn} />
+                </Pressable>
+                <AddAddress onAddAddress={onAddAddress} />
+              </View>
+            )}
           </View>
         </ScrollView>
       </Modal>
-    </View>
+    </View >
   );
 };
 

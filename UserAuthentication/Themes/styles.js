@@ -366,13 +366,22 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         gap: 20,
         justifyContent: 'center',
-        margin: 15
+        margin: 15,
+    },
+    centeredButtons: {
+        flexDirection: 'row',
+        justifyContent: 'center',
+        alignItems: 'center',
+        gap: 20,
+        flex: 1,
+        height: 700,
     },
     selectAddress: {
         position: 'absolute',
         top: 6,
         right: 0
     },
+   
 
     /*---------- Add Address -------*/
     addAddressButton: {
@@ -380,7 +389,7 @@ const styles = StyleSheet.create({
         gap: 20,
         justifyContent: 'center',
         alignItems: 'flex-end',
-        height: 140,
+        height: 130,
     },
     addJobTextInput: {
         padding: 30,
@@ -445,7 +454,7 @@ const styles = StyleSheet.create({
     creditImage: {
         fontSize: 20,
         color: '#000000',
-        textAlign: 'center', 
+        textAlign: 'center',
     },
     creditText: {
         color: '#000000',
